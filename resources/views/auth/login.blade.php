@@ -69,7 +69,7 @@
        </div>
        <div class="col-md-6 d-md-block d-none bg-light p-0 mt-n1 vh-100 overflow-hidden" style="z-index: 1;">
           <!-- Cambio en la imagen de la sección derecha -->
-          <img src="{{asset('images/fondo/fondo.png')}}" class="img-fluid gradient-main animated-scaleX" alt="Cuidado de Mascotas">
+          <img src="{{asset('images/fondo/fondo2.png')}}" class="img-fluid gradient-main animated-scaleX" alt="Cuidado de Mascotas">
        </div>
     </div>
  </section>
