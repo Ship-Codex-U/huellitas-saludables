@@ -1,6 +1,10 @@
 <x-guest-layout>
     <section class="login-content">
+<<<<<<< HEAD
        <div class="row m-0 align-items-center bg-light vh-100">
+=======
+       <div class="row m-0 align-items-center bg-white vh-100">
+>>>>>>> c7591cade3c78e3a896b260cb2d7058a28173a25
           <div class="col-md-6">
              <div class="row justify-content-center">
                 <div class="col-md-10">
@@ -68,6 +72,7 @@
           </div>
        </div>
        <div class="col-md-6 d-md-block d-none bg-light p-0 mt-n1 vh-100 overflow-hidden" style="z-index: 1;">
+<<<<<<< HEAD
         <!-- Cambio en la imagen de la sección derecha -->
         <img src="{{asset('images/fondo/fondo.png')}}" class="img-fluid gradient-main animated-scaleX" alt="Cuidado de Mascotas">
      </div>
@@ -75,3 +80,11 @@
 </section>
 </x-guest-layout>
 
+=======
+          <!-- Cambio en la imagen de la sección derecha -->
+          <img src="{{asset('images/fondo/fondo2.png')}}" class="img-fluid gradient-main animated-scaleX" alt="Cuidado de Mascotas">
+       </div>
+    </div>
+ </section>
+ </x-guest-layout>
+>>>>>>> c7591cade3c78e3a896b260cb2d7058a28173a25
