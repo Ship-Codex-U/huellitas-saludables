@@ -1,20 +1,4 @@
 <x-app-layout layout="landing">
-    <script src="https://maps.googleapis.com/maps/api/js?key=TU_CLAVE_DE_API&callback=inicializarMapa" async defer></script>
-    <script>
-        function inicializarMapa() {
-            var ubicacion = { lat: 40.7128, lng: -74.0060 }; // Latitud y longitud de Nueva York (solo un ejemplo)
-            var mapa = new google.maps.Map(document.getElementById('mapa'), {
-                zoom: 12, // Nivel de zoom del mapa
-                center: ubicacion // Centrar el mapa en la ubicación especificada
-            });
-
-            var marcador = new google.maps.Marker({
-                position: ubicacion,
-                map: mapa,
-                title: 'Ubicación de la veterinaria' // Título del marcador
-            });
-        }
-    </script>
     <div class="banner-one-app">
         <div class="container">
             <div class="row">
@@ -56,7 +40,7 @@
                 <div class="col">
                     <div class="card services-box rounded-1">
                         <div class="card-body">
-                            <h4 class="mb-3">400+ Componentes de UI</h4>
+                            <h4 class="mb-3">Juegos y Estimulación:</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.45109 0.343108L5.46396 1.36387L10.0063 1.42104L0.0568434 11.3704L0.787737 12.1013L10.7371 2.15194L10.7943 6.6942L11.8151 6.70706L11.736 0.422159L5.45109 0.343108Z" fill="currentColor" />
@@ -67,7 +51,7 @@
                 <div class="col">
                     <div class="card services-box rounded-1">
                         <div class="card-body">
-                            <h4 class="mb-3">400+ Componentes de UI</h4>
+                            <h4 class="mb-3">Cuidado de la Salud</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.45109 0.343108L5.46396 1.36387L10.0063 1.42104L0.0568434 11.3704L0.787737 12.1013L10.7371 2.15194L10.7943 6.6942L11.8151 6.70706L11.736 0.422159L5.45109 0.343108Z" fill="currentColor" />
@@ -78,7 +62,7 @@
                 <div class="col">
                     <div class="card services-box rounded-1">
                         <div class="card-body">
-                            <h4 class="mb-3">400+ Componentes de UI</h4>
+                            <h4 class="mb-3">Fortalece el Vínculo: </h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.45109 0.343108L5.46396 1.36387L10.0063 1.42104L0.0568434 11.3704L0.787737 12.1013L10.7371 2.15194L10.7943 6.6942L11.8151 6.70706L11.736 0.422159L5.45109 0.343108Z" fill="currentColor" />
@@ -89,7 +73,7 @@
                 <div class="col">
                     <div class="card services-box rounded-1">
                         <div class="card-body">
-                            <h4 class="mb-3">400+ Componentes de UI</h4>
+                            <h4 class="mb-3">Dieta Balanceada</h4>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                             <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.45109 0.343108L5.46396 1.36387L10.0063 1.42104L0.0568434 11.3704L0.787737 12.1013L10.7371 2.15194L10.7943 6.6942L11.8151 6.70706L11.736 0.422159L5.45109 0.343108Z" fill="currentColor" />
