@@ -1,31 +1,19 @@
 <x-guest-layout>
 <div class="container-fluid p-0">
-    <div class="iq-maintenance text-center"> 
-        <img src="{{asset('images/error/01.png')}}" class="img-fluid mb-4" alt="">            
+    <div class="iq-maintenance text-center">
+        <img src="{{asset('images/error/04.png')}}" class="img-fluid mb-4" alt="">
         <div class="maintenance-bottom text-white pb-0">
             <div class="bg-primary" style="background: transparent; height: 320px;">
                 <div class="gradient-bottom">
                     <div class="bottom-text general-zindex">
-                        <h1 class="mb-2 text-white">Hang on! We are under maintenance</h1>
-                        <p>It will not take a long time till we get the error fiked. We wii live again in</p>
-                        <ul class="countdown d-flex justify-content-center align-items-center list-inline" data-date="Feb 02 2022 20:20:22">
-                            <li>
-                                <span data-days>0</span>Days
-                            </li>
-                            <li>
-                                <span data-hours>0</span>Hours
-                            </li>
-                            <li>
-                                <span data-minutes>0</span>Minutes
-                            </li>
-                            <li>
-                                <span data-seconds>0</span>Seconds
-                            </li>
-                        </ul>
+                        <h1 class="mb-2 text-white">¡Patitas en Alto! Nuestro Sitio Está en Chequeo Veterinario 🐶</h1>
+                        <p>Nuestro sitio está recibiendo un poco de TLC (Tender Loving Care) - al igual que hacemos con tus mascotas. Estamos aplicando algunas mejoras para asegurarnos de que todo funcione purr-fectamente.</p><br>
+                        <p>Si quieres ser notificado cuando volvamos a estar en línea y listos para cuidar de tus amigos peludos, ¡deja tu correo electrónico!</p>
+                        <br>
                         <div class="w-50 mx-auto mt-2">
                             <div class="input-group search-input search-input">
                                 <input type="text" class="form-control" placeholder="Enter your mail">
-                                <a href="#" class="btn bg-white text-primary ms-2 rounded">Notify Me</a>
+                                <a href="#" class="btn bg-white text-primary ms-2 rounded">Notificame</a>
                             </div>
                         </div>
                     </div>
@@ -39,8 +27,8 @@
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div>            
+            </div>
+        </div>
     </div>
     <div class="sign-bg">
         <svg width="280" height="230" viewBox="0 0 431 398" fill="none" xmlns="http://www.w3.org/2000/svg">

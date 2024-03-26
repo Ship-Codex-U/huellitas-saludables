@@ -1,11 +1,18 @@
 <?php
 
 // Controllers
+
+use App\Http\Controllers\Dashboard\AppointmentController;
+use App\Http\Controllers\Dashboard\ConsultationHistoryController;
+use App\Http\Controllers\Dashboard\CustomerController;
+use App\Http\Controllers\Dashboard\EmployeeController;
+use App\Http\Controllers\Dashboard\PetController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Security\RolePermission;
 use App\Http\Controllers\Security\RoleController;
 use App\Http\Controllers\Security\PermissionController;
 use App\Http\Controllers\UserController;
+use App\Models\ConsultationHistory;
 use Illuminate\Support\Facades\Artisan;
 // Packages
 use Illuminate\Support\Facades\Route;
@@ -60,6 +67,29 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Users Module
     Route::resource('users', UserController::class);
+});
+
+Route::resourceVerbs([
+    'create' => 'registro',
+    'store' => 'guardar',
+    'show' => 'informacion',
+    'edit' => 'editar',
+    'update' => 'actualizar',
+    'destroy' => 'eliminar'
+]);
+
+Route::resource('empleados', EmployeeController::class);
+Route::resource('citas', AppointmentController::class);
+Route::resource('clientes', CustomerController::class);
+Route::resource('mascotas', PetController::class);
+Route::resource('historial', ConsultationHistoryController::class);
+
+//App Details Page => 'Comunicacion'], function() {
+Route::group(['prefix' => 'comunicacion'], function() {
+    //MenuStyle Page Routs
+    Route::get('comentarios', [HomeController::class, 'comentarios'])->name('comunicacion.comentarios');
+    Route::get('redes', [HomeController::class, 'redes'])->name('comunicacion.redes');
+    Route::get('correo', [HomeController::class, 'correo'])->name('comunicacion.correo');
 });
 
 //App Details Page => 'Dashboard'], function() {

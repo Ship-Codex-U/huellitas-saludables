@@ -16,6 +16,23 @@ class HomeController extends Controller
     }
 
     /*
+     * Maps Routs
+     */
+    public function comentarios(Request $request)
+    {
+        return view('errors.maintenance');
+    }
+    public function redes(Request $request)
+    {
+        return view('errors.maintenance');
+    }
+    public function Correo(Request $request)
+    {
+        return view('errors.maintenance');
+    }
+
+
+    /*
      * Menu Style Routs
      */
     public function horizontal(Request $request)

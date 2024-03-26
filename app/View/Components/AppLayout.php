@@ -6,9 +6,10 @@ use Illuminate\View\Component;
 
 class AppLayout extends Component
 {
-    public $layout, $dir, $assets, $isHeader1, $isFooter, $isFooter1, $isFooter2 ;
+    public $layout, $dir, $assets, $isHeader1, $isFooter, $isFooter1, $isFooter2;
+    public $titleSubHeader, $descriptionSubHeader;
 
-    public function __construct($layout = '', $dir=false, $assets = [], $isHeader1 = false, $isFooter=false, $isFooter1=false, $isFooter2=false)
+    public function __construct($layout = '', $dir=false, $assets = [], $isHeader1 = false, $isFooter=false, $isFooter1=false, $isFooter2=false, $titleSubHeader = 'Huellitas Saludables', $descriptionSubHeader = 'Veterinaria')
     {
         $this->layout = $layout;
         $this->dir = $dir;
@@ -17,6 +18,8 @@ class AppLayout extends Component
         $this->isFooter = $isFooter;
         $this->isFooter1 = $isFooter1;
         $this->isFooter2 = $isFooter2;
+        $this->titleSubHeader = $titleSubHeader;
+        $this->descriptionSubHeader = $descriptionSubHeader;
     }
 
     /**
@@ -26,6 +29,11 @@ class AppLayout extends Component
      */
     public function render()
     {
+        $textSubHeader = [
+            'titleSubHeader' => $this->titleSubHeader,
+            'descriptionSubHeader' => $this->descriptionSubHeader,
+        ];
+
         switch($this->layout){
             case 'horizontal':
                 return view('layouts.dashboard.horizontal');
@@ -49,7 +57,7 @@ class AppLayout extends Component
                 return view('landing-pages.layouts.default');
             break;
             default:
-                return view('layouts.dashboard.dashboard');
+                return view('layouts.dashboard.dashboard')->with($textSubHeader);;
             break;
         }
     }

@@ -13,7 +13,7 @@
 </head>
 
 <body class="">
-    @include('partials.dashboard._body')
+    @include('partials.dashboard._body',  compact('titleSubHeader', 'descriptionSubHeader'))
     <a class="btn btn-fixed-end btn-secondary btn-icon btn-dashboard" href="../landing-pages/index">Landing Pages</a>
 </body>
 
