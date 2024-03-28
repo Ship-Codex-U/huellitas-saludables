@@ -21,7 +21,9 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('errors.maintenance');
+        $titleSubHeader = "Empleados";
+        $descriptionSubHeader = "Registrar nuevo empleado";
+        return view('employees.register', compact('titleSubHeader', 'descriptionSubHeader'));
     }
 
     /**
