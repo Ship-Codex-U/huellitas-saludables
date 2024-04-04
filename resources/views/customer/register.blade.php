@@ -1,6 +1,7 @@
-<x-app-layout :assets="$assets ?? []" :titleSubHeader="$titleSubHeader ?? 'Huellitas Saludables'" :descriptionSubHeader="$descriptionSubHeader ?? 'Veterinaria'">
+<x-app-layout>
     <div>
-       {!! Form::open(['route' => ['clientes.store'], 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
+       <form method="POST" action="{{ route('clientes.store') }}" enctype="multipart/form-data">
+       @csrf
        <div class="row">
           <div class="col-xl-12 col-lg-8">
              <div class="card">
@@ -16,73 +17,45 @@
                    <div class="new-user-info">
                          <div class="row">
                             <div class="form-group col-md-6">
-                               <label class="form-label" for="fname">First Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('first_name', old('first_name'), ['class' => 'form-control', 'placeholder' => 'First Name', 'required']) }}
+                               <label class="form-label" for="name">Nombre: <span class="text-danger">*</span></label>
+                               <input type="text" name="name" class="form-control" placeholder="Nombre" required>
                             </div>
                             <div class="form-group col-md-6">
-                               <label class="form-label" for="lname">Last Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('last_name', old('last_name'), ['class' => 'form-control', 'placeholder' => 'Last Name' ,'required']) }}
+                               <label class="form-label" for="last_name">Apellido: <span class="text-danger">*</span></label>
+                               <input type="text" name="last_name" class="form-control" placeholder="Apellido" required>
                             </div>
                             <div class="form-group col-md-6">
-                               <label class="form-label" for="add1">Street Address 1:</label>
-                               {{ Form::text('userProfile[street_addr_1]', old('userProfile[street_addr_1]'), ['class' => 'form-control', 'id' => 'add1', 'placeholder' => 'Enter Street Address 1']) }}
+                               <label class="form-label" for="address">Dirección:</label>
+                               <input type="text" name="address" class="form-control" placeholder="Dirección">
                             </div>
                             <div class="form-group col-md-6">
-                               <label class="form-label" for="add2">Street Address 2:</label>
-                               {{ Form::text('userProfile[street_addr_2]', old('userProfile[street_addr_2]'), ['class' => 'form-control', 'id' => 'add2', 'placeholder' => 'Enter Street Address 2']) }}
+                               <label class="form-label" for="ciudad">Ciudad:</label>
+                               <input type="text" name="ciudad" class="form-control" placeholder="Ciudad">
                             </div>
-                            <div class="form-group col-md-12">
-                               <label class="form-label" for="cname">Company Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control', 'required', 'placeholder' => 'Company Name']) }}
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="email">Correo electrónico: <span class="text-danger">*</span></label>
+                               <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
                             </div>
-                            <div class="form-group col-sm-12">
-                               <label class="form-label" id="country">Country:</label>
-                               {{ Form::text('userProfile[country]', old('userProfile[country]'), ['class' => 'form-control', 'id' => 'country']) }}
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="phone_number">Número de teléfono:</label>
+                               <input type="text" name="phone_number" class="form-control" placeholder="Número de teléfono">
+                            </div>
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="alternative_contact_name">Nombre de contacto alternativo:</label>
+                               <input type="text" name="alternative_contact_name" class="form-control" placeholder="Nombre de contacto alternativo">
+                            </div>
+                            <div class="form-group col-md-6">
+                               <label class="form-label" for="alternative_contact_phone_number">Número de teléfono de contacto alternativo:</label>
+                               <input type="text" name="alternative_contact_phone_number" class="form-control" placeholder="Número de teléfono de contacto alternativo">
+                            </div>
+                         </div>
 
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="mobno">Mobile Number:</label>
-                               {{ Form::text('userProfile[phone_number]', old('userProfile[phone_number]'), ['class' => 'form-control', 'id' => 'mobno', 'placeholder' => 'Mobile Number']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="altconno">Alternate Contact:</label>
-                               {{ Form::text('userProfile[alt_phone_number]', old('userProfile[alt_phone_number]'), ['class' => 'form-control', 'id' => 'altconno', 'placeholder' => 'Alternate Contact']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="email">Email: <span class="text-danger">*</span></label>
-                               {{ Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => 'Enter e-mail', 'required']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="pno">Pin Code:</label>
-                               {{ Form::number('userProfile[pin_code]', old('userProfile[pin_code]'), ['class' => 'form-control', 'id' => 'pin_code','step' => 'any']) }}
-                            </div>
-                            <div class="form-group col-md-12">
-                               <label class="form-label" for="city">Town/City:</label>
-                               {{ Form::text('userProfile[city]', old('city'), ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'Enter City Name' ]) }}
-                            </div>
-                         </div>
-                         <hr>
-                         <h5 class="mb-3">Security</h5>
-                         <div class="row">
-                            <div class="form-group col-md-12">
-                               <label class="form-label" for="uname">User Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('username', old('username'), ['class' => 'form-control', 'required', 'placeholder' => 'Enter Username']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="pass">Password:</label>
-                               {{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="rpass">Repeat Password:</label>
-                               {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Repeat Password']) }}
-                            </div>
-                         </div>
                          <button type="submit" class="btn btn-primary">Registrar Cliente</button>
                    </div>
                 </div>
              </div>
           </div>
          </div>
-         {!! Form::close() !!}
+       </form>
     </div>
  </x-app-layout>

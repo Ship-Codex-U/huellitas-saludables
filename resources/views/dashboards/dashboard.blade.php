@@ -105,7 +105,7 @@
                            <div class="progress-detail">
                               <p  class="mb-2">Members</p>
                               <h4 class="counter">11.2M</h4>
-                           </div>
+                           </div>http://127.0.0.1:8000
                         </div>
                      </div>
                   </li>
