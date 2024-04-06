@@ -110,7 +110,7 @@ class UsersDataTable extends DataTable
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Join Date'],
             Column::computed('action')
                   ->exportable(false)
-                  ->printable(false)
+                  ->printable(true)
                   ->searchable(false)
                   ->width(60)
                   ->addClass('text-center hide-search'),

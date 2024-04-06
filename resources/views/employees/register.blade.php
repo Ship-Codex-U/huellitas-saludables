@@ -1,91 +1,181 @@
-<x-app-layout :assets="$assets ?? []" :titleSubHeader="$titleSubHeader ?? 'Huellitas Saludables'" :descriptionSubHeader="$descriptionSubHeader ?? 'Veterinaria'">
-    <div>
-       {!! Form::open(['route' => ['clientes.store'], 'method' => 'post', 'enctype' => 'multipart/form-data']) !!}
-       <div class="row">
-          <div class="col-xl-12 col-lg-8">
-             <div class="card">
+<x-app-layout :assets="$assets ?? []" :titleSubHeader="$titleSubHeader" :descriptionSubHeader="$descriptionSubHeader">
+     <div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-8">
+                <div class="card">
 
-                <div class="card-header d-flex justify-content-between">
-                   <div class="header-title">
-                      <h4 class="card-title">Alta de empleado</h4>
-                   </div>
-                   <div class="card-action">
-                         <a href="{{route('clientes.index')}}" class="btn btn-sm btn-primary" role="button">Regresar</a>
-                   </div>
+                    <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Registrar Empleado</h4>
+                    </div>
+                    <div class="card-action">
+                            <a href="{{route('empleados.index')}}" class="btn btn-sm btn-primary" role="button">Regresar</a>
+                    </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="{{route('empleados.store')}}" method="POST">
+                            @csrf
+
+                            <div class="new-employee-info">
+                                <h5 class="mb-3">Información del Empleado</h5>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="name">Nombre: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" value="{{old('name')}}">
+                                        @error('name')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="last_name">Apellidos: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" value="{{old('last_name')}}">
+                                        @error('last_name')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="date_of_birth">Fecha de nacimiento: <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{old('date_of_birth')}}">
+                                        @error('date_of_birth')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="email">Correo Electronico: <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="mail@example.com" value="{{old('email')}}">
+                                        @error('email')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="phone_number">Numero de Telefono: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="3333221144" value="{{old('phone_number')}}">
+                                        @error('phone_number')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <hr>
+                                    <h5 class="mb-3">Domicilio</h5>
+
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label" for="state">Estado: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="state" name="state" placeholder="Estado" value="{{old('state')}}">
+                                        @error('state')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label" for="city">Municipio: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="city" name="city" placeholder="Municipio" value="{{old('city')}}">
+                                        @error('city')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label" for="street_number">Calle y numero: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="street_number" name="street_number" placeholder="Moderna 55" value="{{old('street_number')}}">
+                                        @error('street_number')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                                <hr>
+                                <h5 class="mb-3">Contacto Alternativo</h5>
+
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="alternative_contact_name">Nombre: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="alternative_contact_name" name="alternative_contact_name" placeholder="Nombre Completo" value="{{old('alternative_contact_name')}}">
+                                        @error('alternative_contact_name')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="alternative_contact_phone_number">Numero de Telefono: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="alternative_contact_phone_number" name="alternative_contact_phone_number" placeholder="3333221144" value="{{old('alternative_contact_phone_number')}}">
+                                        @error('alternative_contact_phone_number')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                                <hr>
+                                <h5 class="mb-3">Información Puesto</h5>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="form-label" for="position">Puesto de Trabajo: <span class="text-danger">*</span></label></label>
+                                        <select class="form-select" data-trigger name="position" id="position" value="{{old('position_type_id')}}">
+                                            <option value="">Seleccione una opción</option>
+
+                                            @foreach ($positionType as $type => $id)
+                                                <option value="{{$id}}">{{$type}}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                        @error('position')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <div class="form-group col-mb-3">
+                                        <input type="checkbox" class="form-check-input" id="send_confirmation_mail" name="send_confirmation_mail" value="1">
+                                        <label class="form-check-label" for="send_confirmation_mail">Enviar correo de confirmación al empleado</label>
+                                     </div>
+                                </div>
+
+                                <hr>
+
+                                <button type="submit" class="btn btn-primary">Registrar Empleado</button>
+                            </div>
+
+                        </form>
+                    </div>
+
                 </div>
-
-                <div class="card-body">
-                   <div class="new-user-info">
-                         <div class="row">
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="fname">First Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('first_name', old('first_name'), ['class' => 'form-control', 'placeholder' => 'First Name', 'required']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="lname">Last Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('last_name', old('last_name'), ['class' => 'form-control', 'placeholder' => 'Last Name' ,'required']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="add1">Street Address 1:</label>
-                               {{ Form::text('userProfile[street_addr_1]', old('userProfile[street_addr_1]'), ['class' => 'form-control', 'id' => 'add1', 'placeholder' => 'Enter Street Address 1']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="add2">Street Address 2:</label>
-                               {{ Form::text('userProfile[street_addr_2]', old('userProfile[street_addr_2]'), ['class' => 'form-control', 'id' => 'add2', 'placeholder' => 'Enter Street Address 2']) }}
-                            </div>
-                            <div class="form-group col-md-12">
-                               <label class="form-label" for="cname">Company Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('userProfile[company_name]', old('userProfile[company_name]'), ['class' => 'form-control', 'required', 'placeholder' => 'Company Name']) }}
-                            </div>
-                            <div class="form-group col-sm-12">
-                               <label class="form-label" id="country">Country:</label>
-                               {{ Form::text('userProfile[country]', old('userProfile[country]'), ['class' => 'form-control', 'id' => 'country']) }}
-
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="mobno">Mobile Number:</label>
-                               {{ Form::text('userProfile[phone_number]', old('userProfile[phone_number]'), ['class' => 'form-control', 'id' => 'mobno', 'placeholder' => 'Mobile Number']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="altconno">Alternate Contact:</label>
-                               {{ Form::text('userProfile[alt_phone_number]', old('userProfile[alt_phone_number]'), ['class' => 'form-control', 'id' => 'altconno', 'placeholder' => 'Alternate Contact']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="email">Email: <span class="text-danger">*</span></label>
-                               {{ Form::email('email', old('email'), ['class' => 'form-control', 'placeholder' => 'Enter e-mail', 'required']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="pno">Pin Code:</label>
-                               {{ Form::number('userProfile[pin_code]', old('userProfile[pin_code]'), ['class' => 'form-control', 'id' => 'pin_code','step' => 'any']) }}
-                            </div>
-                            <div class="form-group col-md-12">
-                               <label class="form-label" for="city">Town/City:</label>
-                               {{ Form::text('userProfile[city]', old('city'), ['class' => 'form-control', 'id' => 'city', 'placeholder' => 'Enter City Name' ]) }}
-                            </div>
-                         </div>
-                         <hr>
-                         <h5 class="mb-3">Security</h5>
-                         <div class="row">
-                            <div class="form-group col-md-12">
-                               <label class="form-label" for="uname">User Name: <span class="text-danger">*</span></label>
-                               {{ Form::text('username', old('username'), ['class' => 'form-control', 'required', 'placeholder' => 'Enter Username']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="pass">Password:</label>
-                               {{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="rpass">Repeat Password:</label>
-                               {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Repeat Password']) }}
-                            </div>
-                         </div>
-                         <button type="submit" class="btn btn-primary">Registrar Cliente</button>
-                   </div>
-                </div>
-
-             </div>
-          </div>
-         </div>
-         {!! Form::close() !!}
+            </div>
+        </div>
     </div>
  </x-app-layout>

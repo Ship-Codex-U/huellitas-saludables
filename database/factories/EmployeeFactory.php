@@ -17,10 +17,16 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
-            'last_name' => $this->faker->words(2, true),
-            'address' => $this->faker->sentence(),
-            'phone_number' => $this->faker->phoneNumber(),
+            'name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'date_birthday' => $this->faker->date(),
+            'email' => $this->faker->freeEmail(),
+            'phone_number' => '3333333333',
+            'state' => $this->faker->state(),
+            'city' => $this->faker->city(),
+            'street_number' => $this->faker->streetAddress(),
+            'alternative_contact_name' => $this->faker->firstName(),
+            'alternative_contact_phone_number' => $this->faker->lastName(),
             'position_type_id' => $this->faker->numberBetween(1,20)
         ];
     }

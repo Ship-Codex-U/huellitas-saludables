@@ -1,7 +1,3 @@
-<div id="loading">
-    @include('partials.dashboard._body_loader')
-</div>
-
 @include('partials.dashboard._body_sidebar')
 <main class="main-content">
     <div class="position-relative">

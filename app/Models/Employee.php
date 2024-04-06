@@ -13,7 +13,7 @@ class Employee extends Model
 
     public function positionType() : BelongsTo
     {
-        return $this->belongsTo(PetType::class);
+        return $this->belongsTo(PositionType::class);
     }
 
     public function vaccinatedPets() : HasMany

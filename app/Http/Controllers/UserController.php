@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index(UsersDataTable $dataTable)
     {
-        $pageTitle = trans('global-message.list_form_title',['form' => trans('users.title')] );
+        $pageTitle = "Lista Usuarios";
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
         $headerAction = '<a href="'.route('users.create').'" class="btn btn-sm btn-primary" role="button">Add User</a>';
