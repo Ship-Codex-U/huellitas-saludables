@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\DataTables\EmployeesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\StoreRequest;
 use App\Mail\WelcomeMailable;
@@ -9,15 +10,23 @@ use App\Models\Employee;
 use App\Models\PositionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Ramsey\Uuid\Type\Integer;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(EmployeesDataTable $dataTable)
     {
-        return view('errors.maintenance');
+        $titleSubHeader = "Empleados";
+        $descriptionSubHeader = "Listado de empleados";
+
+        $pageTitle = "Empleados";
+        $assets = ['data-table'];
+        $headerAction = '<a href="'.route('empleados.create').'" class="btn btn-sm btn-primary" role="button">Registrar Empleado</a>';
+        #return view('dashboards.dashboard', compact('assets'));
+        return $dataTable->render('global.datatable', compact('pageTitle','assets', 'titleSubHeader', 'descriptionSubHeader', 'headerAction'));
     }
 
     /**
@@ -73,9 +82,16 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Employee $employee)
+    public function edit(int $id)
     {
-        //
+        $titleSubHeader = "Empleados";
+        $descriptionSubHeader = "Actualizar datos empleado";
+
+        $positionType = PositionType::pluck('id', 'type');
+
+        $employee = Employee::with('positionType')->findOrFail($id);
+
+        return view('employees.edit', compact('titleSubHeader', 'descriptionSubHeader', 'positionType', 'employee'));
     }
 
     /**
@@ -89,8 +105,22 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Employee $employee)
+    public function destroy(int $id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $status = 'errors';
+        $message= __('global.delete_form_error', ['form' => __('employee.name')]);
+
+        if($employee != '') {
+            $employee->delete();
+            $status = 'success';
+            $message= __('global.delete_form', ['form' => __('employee.name')]);
+        }
+
+        if(request()->ajax()) {
+            return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);
+        }
+
+        return redirect()->back()->with($status,$message);
     }
 }

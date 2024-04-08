@@ -6,7 +6,7 @@
 
                     <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
-                        <h4 class="card-title">Registrar Empleado</h4>
+                        <h4 class="card-title">Actualización de Datos</h4>
                     </div>
                     <div class="card-action">
                             <a href="{{route('empleados.index')}}" class="btn btn-sm btn-primary" role="button">Regresar</a>
@@ -24,7 +24,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="name">Nombre: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" value="{{old('name')}}">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" value="{{old('name', $employee->name)}}">
                                         @error('name')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="last_name">Apellidos: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" value="{{old('last_name')}}">
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" value="{{old('last_name', $employee->last_name)}}">
                                         @error('last_name')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -43,7 +43,7 @@
 
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="date_of_birth">Fecha de nacimiento: <span class="text-danger">*</span></label>
-                                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{old('date_of_birth')}}">
+                                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{old('date_of_birth',  $employee->date_of_birth)}}">
                                         @error('date_of_birth')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -55,7 +55,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="email">Correo Electronico: <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="mail@example.com" value="{{old('email')}}">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="mail@example.com" value="{{old('email', $employee->email)}}">
                                         @error('email')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="phone_number">Numero de Telefono: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Numero de telefono" value="{{old('phone_number')}}">
+                                        <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="3333221144" value="{{old('phone_number', $employee->phone_number)}}">
                                         @error('phone_number')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -80,7 +80,7 @@
 
                                     <div class="form-group col-md-4">
                                         <label class="form-label" for="state">Estado: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="state" name="state" placeholder="Estado" value="{{old('state')}}">
+                                        <input type="text" class="form-control" id="state" name="state" placeholder="Estado" value="{{old('state', $employee->state)}}">
                                         @error('state')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -89,7 +89,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="form-label" for="city">Municipio: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="city" name="city" placeholder="Municipio" value="{{old('city')}}">
+                                        <input type="text" class="form-control" id="city" name="city" placeholder="Municipio" value="{{old('city', $employee->city)}}">
                                         @error('city')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="form-label" for="street_number">Calle y numero: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="street_number" name="street_number" placeholder="Calle #" value="{{old('street_number')}}">
+                                        <input type="text" class="form-control" id="street_number" name="street_number" placeholder="Moderna 55" value="{{old('street_number', $employee->street_number)}}">
                                         @error('street_number')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -114,7 +114,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="alternative_contact_name">Nombre: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="alternative_contact_name" name="alternative_contact_name" placeholder="Nombre Completo" value="{{old('alternative_contact_name')}}">
+                                        <input type="text" class="form-control" id="alternative_contact_name" name="alternative_contact_name" placeholder="Nombre Completo" value="{{old('alternative_contact_name', $employee->alternative_contact_name)}}">
                                         @error('alternative_contact_name')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="alternative_contact_phone_number">Numero de Telefono: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="alternative_contact_phone_number" name="alternative_contact_phone_number" placeholder="3333221144" value="{{old('alternative_contact_phone_number')}}">
+                                        <input type="text" class="form-control" id="alternative_contact_phone_number" name="alternative_contact_phone_number" placeholder="3333221144" value="{{old('alternative_contact_phone_number', $employee->alternative_contact_name)}}">
                                         @error('alternative_contact_phone_number')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -139,7 +139,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label class="form-label" for="position">Puesto de Trabajo: <span class="text-danger">*</span></label></label>
-                                        <select class="form-select" data-trigger name="position" id="position" value="{{old('position_type_id')}}">
+                                        <select class="form-select" data-trigger name="position" id="position" value="{{old('position_type_id', $employee->position_type_id)}}">
                                             <option value="">Seleccione una opción</option>
 
                                             @foreach ($positionType as $type => $id)
@@ -155,15 +155,6 @@
                                         @enderror
 
                                     </div>
-                                </div>
-
-                                <hr>
-
-                                <div class="row">
-                                    <div class="form-group col-mb-3">
-                                        <input type="checkbox" class="form-check-input" id="send_confirmation_mail" name="send_confirmation_mail" value="1">
-                                        <label class="form-check-label" for="send_confirmation_mail">Enviar correo de confirmación al empleado</label>
-                                     </div>
                                 </div>
 
                                 <hr>

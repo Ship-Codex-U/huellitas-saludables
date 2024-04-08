@@ -109,7 +109,7 @@ class UsersDataTable extends DataTable
             ['data' => 'userProfile.company_name', 'name' => 'userProfile.company_name', 'title' => 'Company'],
             ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Join Date'],
             Column::computed('action')
-                  ->exportable(false)
+                  ->exportable(true)
                   ->printable(true)
                   ->searchable(false)
                   ->width(60)
