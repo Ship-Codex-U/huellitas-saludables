@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Users Module
     Route::resource('usuarios', UserController::class)->middleware('can:dashboard.users');
-    Route::get('/empleados/{id}', [EmployeeController::class, 'getEmployee'])->middleware(('can:dashboard.users'));
+    Route::get('/empleados/{id}', EmployeeController::class)->middleware(('can:dashboard.users'));
 
     // Employees Module
     Route::resource('empleados', EmployeeController::class)->middleware('can:dashboard.employees');

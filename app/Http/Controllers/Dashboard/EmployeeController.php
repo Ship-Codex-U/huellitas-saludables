@@ -154,7 +154,5 @@ class EmployeeController extends Controller
                 'email' => $employee->email
             ]);
         }
-
-
     }
 }
