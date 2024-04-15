@@ -57,6 +57,15 @@ Route::get('startup',[HomeController::class, 'landing_startup'])->name('landing-
 Route::get('/informacion-proyecto', [HomeController::class, 'uisheet'])->name('uisheet');
 Route::get('/',[HomeController::class, 'landing_index'])->name('landing-pages.index');
 
+Route::resourceVerbs([
+    'create' => 'registro',
+    'store' => 'guardar',
+    'show' => 'informacion',
+    'edit' => 'editar',
+    'update' => 'actualizar',
+    'destroy' => 'eliminar'
+]);
+
 Route::group(['middleware' => 'auth'], function () {
     // Permission Module
     Route::get('/role-permission',[RolePermission::class, 'index'])->name('role.permission.list');
@@ -67,17 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     // Users Module
-    Route::resource('users', UserController::class);
+    Route::resource('usuarios', UserController::class);
 });
 
-Route::resourceVerbs([
-    'create' => 'registro',
-    'store' => 'guardar',
-    'show' => 'informacion',
-    'edit' => 'editar',
-    'update' => 'actualizar',
-    'destroy' => 'eliminar'
-]);
 
 Route::resource('empleados', EmployeeController::class);
 Route::resource('citas', AppointmentController::class);

@@ -24,7 +24,7 @@ class UserController extends Controller
         $pageTitle = "Lista Usuarios";
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
-        $headerAction = '<a href="'.route('users.create').'" class="btn btn-sm btn-primary" role="button">Add User</a>';
+        $headerAction = '<a href="'.route('usuarios.create').'" class="btn btn-sm btn-primary" role="button">Add User</a>';
         return $dataTable->render('global.datatable', compact('pageTitle','auth_user','assets', 'titleSubHeader', 'descriptionSubHeader', 'headerAction'));
     }
 
@@ -35,9 +35,12 @@ class UserController extends Controller
      */
     public function create()
     {
+        $titleSubHeader = "Usuarios";
+        $descriptionSubHeader = "Alta de Usuario";
+
         $roles = Role::where('status',1)->get()->pluck('title', 'id');
 
-        return view('users.form', compact('roles'));
+        return view('users.register', compact('roles', 'titleSubHeader', 'descriptionSubHeader'));
     }
 
     /**
@@ -61,7 +64,7 @@ class UserController extends Controller
         // Save user Profile data...
         $user->userProfile()->create($request->userProfile);
 
-        return redirect()->route('users.index')->withSuccess(__('message.msg_added',['name' => __('users.store')]));
+        return redirect()->route('usuarios.index')->withSuccess(__('message.msg_added',['name' => __('users.store')]));
     }
 
     /**
@@ -133,7 +136,7 @@ class UserController extends Controller
         $user->userProfile->fill($request->userProfile)->update();
 
         if(auth()->check()){
-            return redirect()->route('users.index')->withSuccess(__('message.msg_updated',['name' => __('message.user')]));
+            return redirect()->route('usuarios.index')->withSuccess(__('message.msg_updated',['name' => __('message.user')]));
         }
         return redirect()->back()->withSuccess(__('message.msg_updated',['name' => 'My Profile']));
 
