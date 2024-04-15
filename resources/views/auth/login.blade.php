@@ -23,13 +23,13 @@
                                <div class="col-lg-12">
                                   <div class="form-group">
                                      <label for="email" class="form-label">Correo Electrónico</label>
-                                     <input id="email" type="email" name="email"  value="{{env('IS_DEMO') ? 'admin@huellitassaludables.com' : old('email')}}" class="form-control"  placeholder="admin@huellitassaludables.com" required autofocus>
+                                     <input id="email" type="email" name="email"  value="{{old('email')}}" class="form-control"  placeholder="email@huellitassaludables.com" required autofocus>
                                   </div>
                                </div>
                                <div class="col-lg-12">
                                   <div class="form-group">
                                      <label for="password" class="form-label">Contraseña</label>
-                                     <input class="form-control" type="password" placeholder="********"  name="password" value="{{ env('IS_DEMO') ? 'contraseña' : '' }}" required autocomplete="current-password">
+                                     <input class="form-control" type="password" placeholder="********"  name="password" value="{{''}}" required autocomplete="current-password">
                                   </div>
                                </div>
                                <div class="col-lg-6">
@@ -45,22 +45,6 @@
                             <div class="d-flex justify-content-center">
                                <button type="submit" class="btn btn-primary">{{ __('Iniciar Sesión') }}</button>
                             </div>
-                            <p class="text-center my-3">¿O iniciar sesión con otras cuentas?</p>
-                            <div class="d-flex justify-content-center">
-                               <!-- Se pueden mantener los enlaces a redes sociales o ajustar según sea necesario -->
-                               <ul class="list-group list-group-horizontal list-group-flush">
-                                  <li class="list-group-item border-0 pb-0">
-                                     <a href="#"><img src="{{asset('images/brands/fb.svg')}}" alt="Facebook"></a>
-                                  </li>
-                                  <li class="list-group-item border-0 pb-0">
-                                     <a href="#"><img src="{{asset('images/brands/gm.svg')}}" alt="Google"></a>
-                                  </li>
-                                  <!-- Más enlaces de redes sociales si es necesario -->
-                               </ul>
-                            </div>
-                            <p class="mt-3 text-center">
-                               ¿No tienes una cuenta? <a href="{{route('auth.signup')}}" class="text-underline">Haz clic aquí para registrarte.</a>
-                            </p>
                          </form>
                       </div>
                    </div>

@@ -159,24 +159,26 @@
                                 <hr>
                                 <h5 class="mb-3">Información Puesto</h5>
 
-                                <!-- <div class="row">
+                                <div class="row">
                                     <div class="form-group col-md-12">
-                                        <label class="form-label" for="role">Rol: <span
-                                                class="text-danger">*</span></label>
-                                        <select class="form-select" name="role" id="role">
-                                            <option value="">Seleccione un rol</option>
-                                            <option value="secretario">Secretario</option>
-                                            <option value="administrador">Administrador</option>
-                                            <option value="doctor">Doctor</option>
-                                        </select>
-                                        @error('role')
-                                        <div>
-                                            <span class="text-danger">{{$message}}</span>
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div> -->
+                                        <label class="form-label" for="position">Puesto de Trabajo: <span class="text-danger">*</span></label></label>
+                                        <select class="form-select" data-trigger name="position" id="position" value="{{old('position_type_id')}}">
+                                            <option value="">Seleccione una opción</option>
 
+                                            @foreach ($positionType as $type => $id)
+                                                <option value="{{$id}}">{{$type}}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                        @error('position')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+
+                                    </div>
+                                </div>
 
                                 <hr>
 

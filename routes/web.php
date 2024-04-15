@@ -54,9 +54,8 @@ Route::get('startup',[HomeController::class, 'landing_startup'])->name('landing-
 });
 
 //UI Pages Routs
-Route::get('/', [HomeController::class, 'uisheet'])->name('uisheet');
-
-Route::get("/botones", [HomeController::class, 'ejemploBotones'])->name('botones');
+Route::get('/informacion-proyecto', [HomeController::class, 'uisheet'])->name('uisheet');
+Route::get('/',[HomeController::class, 'landing_index'])->name('landing-pages.index');
 
 Route::group(['middleware' => 'auth'], function () {
     // Permission Module

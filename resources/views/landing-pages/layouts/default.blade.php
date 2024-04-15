@@ -39,7 +39,7 @@
             </svg>
         </a>
     </div>
-    <a class="btn btn-fixed-end btn-primary btn-icon btn-dashboard" href="../dashboard">Dashboard Demo</a>
+    <a class="btn btn-fixed-end btn-primary btn-icon btn-dashboard" href="../dashboard">Inicio Dashboard</a>
 
     @include('landing-pages.components.partials.footer')
     @include('landing-pages.components.partials.scripts')

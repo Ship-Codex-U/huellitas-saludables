@@ -108,6 +108,7 @@ class EmployeeController extends Controller
     public function destroy(int $id)
     {
         $employee = Employee::findOrFail($id);
+
         $status = 'errors';
         $message= __('global.delete_form_error', ['form' => __('employee.name')]);
 

@@ -41,7 +41,7 @@
                             transform="rotate(45 10.5562 -0.556152)" fill="currentColor"></rect>
                     </svg>
                     <!--logo End-->
-                    <h5 class="logo-title">Hope UI</h5>
+                    <h5 class="logo-title">{{ config('app.name', 'Laravel') }}</h5>
                 </a>
             </div>
             <ul class="d-block d-xl-none list-unstyled m-0">
@@ -75,14 +75,6 @@
                         </li>
                     </ul>
                 </li>
-            </ul>
-            <ul class=" navbar-nav  align-items-center navbar-list d-none d-xl-flex">
-                <li class="nav-item"><a class="nav-link {{ activeRoute(route('landing-pages.blog')) }}"
-                        href="{{ route('landing-pages.blog') }}"> Blog </a></li>
-                <li class="nav-item"><a class="nav-link {{ activeRoute(route('landing-pages.faq')) }}"
-                        href="{{ route('landing-pages.faq') }}"> Faq </a></li>
-                <li class="nav-item"><a class="nav-link {{ activeRoute(route('landing-pages.contact')) }}"
-                        href="{{ route('landing-pages.contact') }}"> Contact Us </a></li>
             </ul>
         </div>
     </div>
