@@ -10,9 +10,12 @@ class RolePermission extends Controller
 {
     public function index(Request $request)
     {
+        $titleSubHeader = "Roles y permisos";
+        $descriptionSubHeader = "Listado de roles y permisos";
+
         $roles = Role::get();
         $permissions = Permission::get();
-        return view('role-permission.permissions', compact('roles', 'permissions'));
+        return view('role-permission.permissions', compact('roles', 'permissions', 'titleSubHeader', 'descriptionSubHeader'));
     }
 
     public function store(Request $request)

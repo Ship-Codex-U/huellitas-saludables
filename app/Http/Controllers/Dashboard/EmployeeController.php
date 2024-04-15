@@ -124,4 +124,20 @@ class EmployeeController extends Controller
 
         return redirect()->back()->with($status,$message);
     }
+
+    public function getEmployee(int $id)
+{
+    // Busca el empleado por su ID
+    $employee = Employee::find($id);
+
+    // Si no se encuentra el empleado, devuelve un error
+    if (!$employee) {
+        return response()->json([
+            'error' => 'Empleado no encontrado'
+        ], 404);
+    }
+
+    // Si se encuentra el empleado, devuelve sus datos
+    return response()->json($employee);
+}
 }

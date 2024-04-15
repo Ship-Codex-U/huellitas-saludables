@@ -24,6 +24,7 @@
     {{-------------------------------------------------------------------------------------------}}
 
     {{-- Nombre de la Seccion: Administrador --}}
+    @can('label.administracion')
     <li><hr class="hr-horizontal"></li>
 
     {{--Etiqueta: Administracion --}}
@@ -33,8 +34,25 @@
             <span class="mini-icon">-</span>
         </a>
     </li>
+    @endcan
+
+    {{-- Roles --}}
+    @can('dashboard.role')
+    <li class="nav-item">
+        <a class="nav-link {{activeRoute(route('role.list'))}}" href="{{route('role.list')}}">
+            <i class="icon">
+            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.7688 8.71387H16.2312C18.5886 8.71387 20.5 10.5831 20.5 12.8885V17.8254C20.5 20.1308 18.5886 22 16.2312 22H7.7688C5.41136 22 3.5 20.1308 3.5 17.8254V12.8885C3.5 10.5831 5.41136 8.71387 7.7688 8.71387ZM11.9949 17.3295C12.4928 17.3295 12.8891 16.9419 12.8891 16.455V14.2489C12.8891 13.772 12.4928 13.3844 11.9949 13.3844C11.5072 13.3844 11.1109 13.772 11.1109 14.2489V16.455C11.1109 16.9419 11.5072 17.3295 11.9949 17.3295Z" fill="currentColor"></path>
+            <path opacity="0.4" d="M17.523 7.39595V8.86667C17.1673 8.7673 16.7913 8.71761 16.4052 8.71761H15.7447V7.39595C15.7447 5.37868 14.0681 3.73903 12.0053 3.73903C9.94257 3.73903 8.26594 5.36874 8.25578 7.37608V8.71761H7.60545C7.20916 8.71761 6.83319 8.7673 6.47754 8.87661V7.39595C6.4877 4.41476 8.95692 2 11.985 2C15.0537 2 17.523 4.41476 17.523 7.39595Z" fill="currentColor"></path>
+            </svg>
+            </i>
+            <span class="item-name">Roles y Permisos</span>
+        </a>
+    </li>
+    @endcan
 
     {{-- Usuarios --}}
+    @can('dashboard.users')
     <li class="nav-item">
         <a class="nav-link " data-bs-toggle="collapse" href="#sidebar-user" role="button" aria-expanded="false" aria-controls="sidebar-user">
             <i class="icon">
@@ -69,7 +87,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{activeRoute(route('usuarios.create', 1))}}" href="{{route('usuarios.create', 1)}}">
+                <a class="nav-link {{activeRoute(route('usuarios.create'))}}" href="{{route('usuarios.create')}}">
                     <i class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
                             <g>
@@ -81,19 +99,7 @@
                     <span class="item-name">Registrar Usuario</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{activeRoute(route('usuarios.create'))}}" href="{{route('usuarios.create')}}">
-                    <i class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                            <g>
-                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                            </g>
-                        </svg>
-                    </i>
-                    <i class="sidenav-mini-icon"> E </i>
-                    <span class="item-name">Editar Usuario</span>
-                </a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link {{activeRoute(route('usuarios.index'))}}" href="{{route('usuarios.index')}}">
                     <i class="icon">
@@ -109,8 +115,26 @@
             </li>
         </ul>
     </li>
+    @endcan
+
+    {{-------------------------------------------------------------------------------------------}}
+
+    {{-- Nombre de la Seccion: Recursos Humanos --}}
+    @can('label.recursosHumanos')
+    <li><hr class="hr-horizontal"></li>
+
+    {{--Etiqueta: Recursos Humanos --}}
+    <li class="nav-item static-item">
+        <a class="nav-link static-item disabled" href="#" tabindex="-1">
+            <span class="default-icon">Recursos Humanos</span>
+            <span class="mini-icon">-</span>
+        </a>
+    </li>
+
+    @endcan
 
     {{-- Empleados --}}
+    @can('dashboard.employees')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-employee" role="button"  aria-expanded="false" aria-controls="sidebar-employee">
             <i class="icon">
@@ -155,12 +179,14 @@
             </li>
         </ul>
     </li>
+    @endcan
 
 
 
     {{-------------------------------------------------------------------------------------------}}
 
     {{-- Nombre de la Seccion: Control Veterinaria --}}
+    @can('label.controlVeterinaria')
     <li><hr class="hr-horizontal"></li>
 
     {{--Etiqueta: Control Veterinaria--}}
@@ -170,8 +196,10 @@
             <span class="mini-icon">-</span>
         </a>
     </li>
+    @endcan
 
     {{-- Citas --}}
+    @can('dashboard.appointments')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-appointment" role="button"  aria-expanded="false" aria-controls="sidebar-appointment">
             <i class="icon">
@@ -218,8 +246,10 @@
             </li>
         </ul>
     </li>
+    @endcan
 
     {{-- Clientes --}}
+    @can('dashboard.customers')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-customers" role="button"  aria-expanded="false" aria-controls="sidebar-customers">
             <i class="icon">
@@ -263,8 +293,10 @@
             </li>
         </ul>
     </li>
+    @endcan
 
     {{-- Mascotas --}}
+    @can('dashboard.pets')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-pets" role="button"  aria-expanded="false" aria-controls="sidebar-pets">
             <i class="icon">
@@ -309,8 +341,10 @@
             </li>
         </ul>
     </li>
+    @endcan
 
     {{-- Historial Clinico --}}
+    @can('dashboard.consultationhistories')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-consultationhistory" role="button"  aria-expanded="false" aria-controls="sidebar-consultationhistory">
             <i class="icon">
@@ -355,8 +389,10 @@
             </li>
         </ul>
     </li>
+    @endcan
 
     {{-- Comunicacion --}}
+    @can('dashboard.comunicacion')
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-comunication" role="button"  aria-expanded="false" aria-controls="sidebar-comunication">
             <i class="icon">
@@ -414,10 +450,13 @@
             </li>
         </ul>
     </li>
+    @endcan
 
     {{-------------------------------------------------------------------------------------------}}
 
     {{-- Nombre de la Seccion: Herramientas y Componentes --}}
+
+    @can('dashboard.tools')
     <li><hr class="hr-horizontal"></li>
 
     <li class="nav-item static-item">
@@ -664,18 +703,6 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{activeRoute(route('role.permission.list'))}}" href="{{route('role.permission.list')}}" target="_blank">
-            <i class="icon">
-            <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.7688 8.71387H16.2312C18.5886 8.71387 20.5 10.5831 20.5 12.8885V17.8254C20.5 20.1308 18.5886 22 16.2312 22H7.7688C5.41136 22 3.5 20.1308 3.5 17.8254V12.8885C3.5 10.5831 5.41136 8.71387 7.7688 8.71387ZM11.9949 17.3295C12.4928 17.3295 12.8891 16.9419 12.8891 16.455V14.2489C12.8891 13.772 12.4928 13.3844 11.9949 13.3844C11.5072 13.3844 11.1109 13.772 11.1109 14.2489V16.455C11.1109 16.9419 11.5072 17.3295 11.9949 17.3295Z" fill="currentColor"></path>
-            <path opacity="0.4" d="M17.523 7.39595V8.86667C17.1673 8.7673 16.7913 8.71761 16.4052 8.71761H15.7447V7.39595C15.7447 5.37868 14.0681 3.73903 12.0053 3.73903C9.94257 3.73903 8.26594 5.36874 8.25578 7.37608V8.71761H7.60545C7.20916 8.71761 6.83319 8.7673 6.47754 8.87661V7.39595C6.4877 4.41476 8.95692 2 11.985 2C15.0537 2 17.523 4.41476 17.523 7.39595Z" fill="currentColor"></path>
-            </svg>
-            </i>
-            <span class="item-name">Admin</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
         <a class="nav-link" href="{{route('uisheet')}}" target="_blank">
             <i class="icon">
                  <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -892,5 +919,6 @@
             </li>
         </ul>
     </li>
+    @endcan
 
 </ul>

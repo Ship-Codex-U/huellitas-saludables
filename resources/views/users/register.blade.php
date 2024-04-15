@@ -9,13 +9,15 @@
                    </div>
                 </div>
                 <div class="card-body">
-                    <div class="form-group">
-                         <label class="form-label" for="email">ID del empleado: <span class="text-danger">*</span></label>
-                         <input type="text" class="form-control" id="employee_id" name="employee_id">
-                     </div>
-                     <div class="form-group">
-                         <button type="submit" class="btn btn-primary">Buscar Empleado</button>
-                     </div>
+                    <form id="searchForm"> <!-- Agrega un formulario -->
+                        <div class="form-group">
+                             <label class="form-label" for="idemployee">ID del empleado: <span class="text-danger">*</span></label>
+                             <input type="text" class="form-control" id="employee_id" name="employee_id">
+                         </div>
+                         <div class="form-group">
+                             <button type="button" id="search_employee" class="btn btn-primary">Buscar Empleado</button>
+                         </div>
+                    </form> <!-- Cierre del formulario -->
                  </div>
              </div>
          </div>
@@ -44,7 +46,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                <label class="form-label" for="add1">Posición o puesto de trabajo:</label>
-                               <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Posición" value="{{old('last_name')}}" readonly disabled>
+                               <input type="text" class="form-control" id="position" name="position" placeholder="Posición" value="{{old('last_name')}}" readonly disabled>
                             </div>
                          </div>
 
@@ -102,4 +104,34 @@
           </div>
          </div>
     </div>
+
+    <!-- JQuery -->
+    <script src="{{asset('js/jquery.js') }} "></script>
+
+    <script>
+    $(document).ready(function(){
+    // Agrega un event listener al hacer clic en el botón
+    $('#search_employee').on('click', function(){
+
+        var employeeID = $('#employee_id').val();
+        if(employeeID){
+            $.ajax({
+                type:'GET',
+                url:'/empleados/' + employeeID,
+                success:function(data){
+                    if(data){
+                        alert('Empleado localizado');
+                        $('#name').val(data.name);
+                        $('#last_name').val(data.last_name);
+                    }else{
+                        alert('No se encontró ningún empleado con ese ID');
+                    }
+                }
+            });
+        } else {
+            alert('Por favor ingrese el numero de empleado');
+        }
+    });
+});
+    </script>
  </x-app-layout>

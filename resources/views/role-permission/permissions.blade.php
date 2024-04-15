@@ -1,4 +1,4 @@
-<x-app-layout :assets="$assets ?? []">
+<x-app-layout :assets="$assets ?? []" :titleSubHeader="$titleSubHeader" :descriptionSubHeader="$descriptionSubHeader">
 <div>
    <div class="row">
       <div class="col-sm-12">

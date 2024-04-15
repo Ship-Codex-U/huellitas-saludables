@@ -34,27 +34,11 @@ Route::get('/storage', function () {
     Artisan::call('storage:link');
 });
 
-
-//Landing-Pages Routes
-Route::group(['prefix' => 'landing-pages'], function() {
-Route::get('index',[HomeController::class, 'landing_index'])->name('landing-pages.index');
-Route::get('blog',[HomeController::class, 'landing_blog'])->name('landing-pages.blog');
-Route::get('blog-detail',[HomeController::class, 'landing_blog_detail'])->name('landing-pages.blog-detail');
-Route::get('about',[HomeController::class, 'landing_about'])->name('landing-pages.about');
-Route::get('contact',[HomeController::class, 'landing_contact'])->name('landing-pages.contact');
-Route::get('ecommerce',[HomeController::class, 'landing_ecommerce'])->name('landing-pages.ecommerce');
-Route::get('faq',[HomeController::class, 'landing_faq'])->name('landing-pages.faq');
-Route::get('feature',[HomeController::class, 'landing_feature'])->name('landing-pages.feature');
-Route::get('pricing',[HomeController::class, 'landing_pricing'])->name('landing-pages.pricing');
-Route::get('saas',[HomeController::class, 'landing_saas'])->name('landing-pages.saas');
-Route::get('shop',[HomeController::class, 'landing_shop'])->name('landing-pages.shop');
-Route::get('shop-detail',[HomeController::class, 'landing_shop_detail'])->name('landing-pages.shop-detail');
-Route::get('software',[HomeController::class, 'landing_software'])->name('landing-pages.software');
-Route::get('startup',[HomeController::class, 'landing_startup'])->name('landing-pages.startup');
-});
-
-//UI Pages Routs
+//Informacion
 Route::get('/informacion-proyecto', [HomeController::class, 'uisheet'])->name('uisheet');
+
+
+//Ruta Principal - Landing Page
 Route::get('/',[HomeController::class, 'landing_index'])->name('landing-pages.index');
 
 Route::resourceVerbs([
@@ -66,33 +50,299 @@ Route::resourceVerbs([
     'destroy' => 'eliminar'
 ]);
 
+//Rutas internas - Dashboard
 Route::group(['middleware' => 'auth'], function () {
     // Permission Module
-    Route::get('/role-permission',[RolePermission::class, 'index'])->name('role.permission.list');
-    Route::resource('permission',PermissionController::class);
-    Route::resource('role', RoleController::class);
+    Route::get('/roles',[RolePermission::class, 'index'])->name('role.list')->middleware('can:dashboard.role');
+    Route::resource('permission',PermissionController::class)->middleware('can:dashboard.role');
+    Route::resource('role', RoleController::class)->middleware('can:dashboard.role');
 
     // Dashboard Routes
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     // Users Module
-    Route::resource('usuarios', UserController::class);
+    Route::resource('usuarios', UserController::class)->middleware('can:dashboard.users');
+    Route::get('/empleados/{id}', [EmployeeController::class, 'getEmployee'])->middleware(('can:dashboard.users'));
+
+    // Employees Module
+    Route::resource('empleados', EmployeeController::class)->middleware('can:dashboard.employees');
+
+    // Appointments Module
+    Route::resource('citas', AppointmentController::class)->middleware('can:dashboard.appointments');
+
+    // Customers Module
+    Route::resource('clientes', CustomerController::class)->middleware('can:dashboard.customers');
+
+    // Pets Module
+    Route::resource('mascotas', PetController::class)->middleware('can:dashboard.pets');
+
+    // Consultation Histories Module
+    Route::resource('historial', ConsultationHistoryController::class)->middleware('can:dashboard.consultationhistories');
+
+    // Comunication Module
+    Route::group(['prefix' => 'comunicacion'], function() {
+        //MenuStyle Page Routs
+        Route::get('comentarios', [HomeController::class, 'comentarios'])->name('comunicacion.comentarios');
+        Route::get('redes', [HomeController::class, 'redes'])->name('comunicacion.redes');
+        Route::get('correo', [HomeController::class, 'correo'])->name('comunicacion.correo');
+    })->middleware('can:dashboard.comunicacion');
 });
 
 
-Route::resource('empleados', EmployeeController::class);
-Route::resource('citas', AppointmentController::class);
-Route::resource('clientes', CustomerController::class);
-Route::resource('mascotas', PetController::class);
-Route::resource('historial', ConsultationHistoryController::class);
 
-//App Details Page => 'Comunicacion'], function() {
-Route::group(['prefix' => 'comunicacion'], function() {
-    //MenuStyle Page Routs
-    Route::get('comentarios', [HomeController::class, 'comentarios'])->name('comunicacion.comentarios');
-    Route::get('redes', [HomeController::class, 'redes'])->name('comunicacion.redes');
-    Route::get('correo', [HomeController::class, 'correo'])->name('comunicacion.correo');
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //App Details Page => 'Dashboard'], function() {
 Route::group(['prefix' => 'menu-style'], function() {
@@ -170,3 +420,23 @@ Route::group(['prefix' => 'icons'], function() {
 //Extra Page Routs
 Route::get('privacy-policy', [HomeController::class, 'privacypolicy'])->name('pages.privacy-policy');
 Route::get('terms-of-use', [HomeController::class, 'termsofuse'])->name('pages.term-of-use');
+
+/*
+//Landing-Pages Routes
+Route::group(['prefix' => 'landing-pages'], function() {
+Route::get('index',[HomeController::class, 'landing_index'])->name('landing-pages.index');
+Route::get('blog',[HomeController::class, 'landing_blog'])->name('landing-pages.blog');
+Route::get('blog-detail',[HomeController::class, 'landing_blog_detail'])->name('landing-pages.blog-detail');
+Route::get('about',[HomeController::class, 'landing_about'])->name('landing-pages.about');
+Route::get('contact',[HomeController::class, 'landing_contact'])->name('landing-pages.contact');
+Route::get('ecommerce',[HomeController::class, 'landing_ecommerce'])->name('landing-pages.ecommerce');
+Route::get('faq',[HomeController::class, 'landing_faq'])->name('landing-pages.faq');
+Route::get('feature',[HomeController::class, 'landing_feature'])->name('landing-pages.feature');
+Route::get('pricing',[HomeController::class, 'landing_pricing'])->name('landing-pages.pricing');
+Route::get('saas',[HomeController::class, 'landing_saas'])->name('landing-pages.saas');
+Route::get('shop',[HomeController::class, 'landing_shop'])->name('landing-pages.shop');
+Route::get('shop-detail',[HomeController::class, 'landing_shop_detail'])->name('landing-pages.shop-detail');
+Route::get('software',[HomeController::class, 'landing_software'])->name('landing-pages.software');
+Route::get('startup',[HomeController::class, 'landing_startup'])->name('landing-pages.startup');
+});
+*/

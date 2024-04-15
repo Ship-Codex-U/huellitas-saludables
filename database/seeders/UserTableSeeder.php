@@ -17,10 +17,21 @@ class UserTableSeeder extends Seeder
     {
         $users = [
             [
-                'first_name' => 'System',
-                'last_name' => 'Admin',
-                'username' => 'systemadmin',
-                'email' => 'admin@example.com',
+                'first_name' => 'Usuario',
+                'last_name' => 'Desarrollador',
+                'username' => 'HS00',
+                'email' => 'dev@huellitassaludables.com',
+                'password' => bcrypt('password'),
+                'phone_number' => '+12398190255',
+                'email_verified_at' => now(),
+                'user_type' => 'dev',
+                'status' => 'active'
+            ],
+            [
+                'first_name' => 'Usuario',
+                'last_name' => 'Administrador',
+                'username' => 'HS01',
+                'email' => 'admin@huellitassaludables.com',
                 'password' => bcrypt('password'),
                 'phone_number' => '+12398190255',
                 'email_verified_at' => now(),
@@ -28,25 +39,37 @@ class UserTableSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'first_name' => 'Demo',
-                'last_name' => 'Admin',
-                'username' => 'demoadmin',
-                'email' => 'demo@example.com',
+                'first_name' => 'Usuario',
+                'last_name' => 'Recursos Humanos',
+                'username' => 'HS02',
+                'email' => 'rh@huellitassaludables.com',
                 'password' => bcrypt('password'),
                 'phone_number' => '+12398190255',
                 'email_verified_at' => now(),
-                'user_type' => 'demo_admin',
+                'user_type' => 'rh',
+                'status' => 'active',
             ],
             [
-                'first_name' => 'John',
-                'last_name' => 'User',
-                'username' => 'user',
-                'email' => 'user@example.com',
+                'first_name' => 'Usuario',
+                'last_name' => 'Recepcionista',
+                'username' => 'HS03',
+                'email' => 'recepcion@huellitassaludables.com',
                 'password' => bcrypt('password'),
                 'phone_number' => '+12398190255',
                 'email_verified_at' => now(),
-                'user_type' => 'user',
-                'status' => 'inactive'
+                'user_type' => 'receptionist',
+                'status' => 'active'
+            ],
+            [
+                'first_name' => 'Usuario',
+                'last_name' => 'Veterinario',
+                'username' => 'HS04',
+                'email' => 'veterinario01@huellitassaludables.com',
+                'password' => bcrypt('password'),
+                'phone_number' => '+12398190255',
+                'email_verified_at' => now(),
+                'user_type' => 'veterinarian',
+                'status' => 'active'
             ]
         ];
         foreach ($users as $key => $value) {
