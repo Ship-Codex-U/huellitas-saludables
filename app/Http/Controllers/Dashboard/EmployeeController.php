@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\StoreRequest;
 use App\Mail\WelcomeMailable;
 use App\Models\Employee;
-use App\Models\User;
 use App\Models\PositionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -109,7 +108,6 @@ class EmployeeController extends Controller
     public function destroy(int $id)
     {
         $employee = Employee::findOrFail($id);
-
         $status = 'errors';
         $message= __('global.delete_form_error', ['form' => __('employee.name')]);
 
@@ -154,5 +152,7 @@ class EmployeeController extends Controller
                 'email' => $employee->email
             ]);
         }
+
+
     }
 }
