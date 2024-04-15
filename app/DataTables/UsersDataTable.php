@@ -102,7 +102,6 @@ class UsersDataTable extends DataTable
         return [
             ['data' => 'id', 'name' => 'id', 'title' => 'id'],
             ['data' => 'full_name', 'name' => 'full_name', 'title' => 'FULL NAME', 'orderable' => false],
-            ['data' => 'phone_number', 'name' => 'phone_number', 'title' => 'Phone Number'],
             ['data' => 'email', 'name' => 'email', 'title' => 'Email'],
             ['data' => 'userProfile.country', 'name' => 'userProfile.country', 'title' => 'Country'],
             ['data' => 'status', 'name' => 'status', 'title' => 'Status'],

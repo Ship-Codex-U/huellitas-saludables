@@ -19,17 +19,17 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionTableSeeder::class,
             RoleTableSeeder::class,
-            UserTableSeeder::class,
             VaccineSeeder::class,
             PositionTypeSeeder::class,
+            EmployeeSeeder::class,
             AppointmentStatusSeeder::class,
             PetTypeSeeder::class,
             CustomerSeeder::class,
             PetSeeder::class,
-            EmployeeSeeder::class,
             AppointmentSeeder::class,
             ConsultationHistorySeeder::class,
             PetVaccineSeeder::class,
+            UserTableSeeder::class,
         ]);
         #\App\Models\User::factory(40)->create()->each(function($user) {
         #    $user->assignRole('user');

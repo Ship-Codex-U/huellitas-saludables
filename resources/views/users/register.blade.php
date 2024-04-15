@@ -9,7 +9,7 @@
                    </div>
                 </div>
                 <div class="card-body">
-                    <form id="searchForm"> <!-- Agrega un formulario -->
+
                         <div class="form-group">
                              <label class="form-label" for="idemployee">ID del empleado: <span class="text-danger">*</span></label>
                              <input type="text" class="form-control" id="employee_id" name="employee_id">
@@ -17,7 +17,7 @@
                          <div class="form-group">
                              <button type="button" id="search_employee" class="btn btn-primary">Buscar Empleado</button>
                          </div>
-                    </form> <!-- Cierre del formulario -->
+
                  </div>
              </div>
          </div>
@@ -111,27 +111,34 @@
     <script>
     $(document).ready(function(){
     // Agrega un event listener al hacer clic en el botón
-    $('#search_employee').on('click', function(){
+        $('#search_employee').on('click', function(){
 
+        var regex = /^[0-9]+$/;
         var employeeID = $('#employee_id').val();
-        if(employeeID){
+
+        if(regex.test(employeeID)){
             $.ajax({
                 type:'GET',
                 url:'/empleados/' + employeeID,
                 success:function(data){
-                    if(data){
-                        alert('Empleado localizado');
-                        $('#name').val(data.name);
-                        $('#last_name').val(data.last_name);
-                    }else{
+                    if(data.status == '404'){
                         alert('No se encontró ningún empleado con ese ID');
+                    }else{
+                        if(data.status == '405'){
+                            alert('Este empleado ya tiene un rol asignado');
+                        }else{
+                            $('#name').val(data.name);
+                            $('#last_name').val(data.last_name);
+                            $('#position').val(data.positionType);
+                            $('email').val(data.email);
+                        }
                     }
-                }
-            });
+                    }
+                });
         } else {
-            alert('Por favor ingrese el numero de empleado');
+            alert('Por favor ingrese el numero de empleado valido');
         }
+        });
     });
-});
     </script>
  </x-app-layout>

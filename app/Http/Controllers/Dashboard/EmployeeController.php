@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\StoreRequest;
 use App\Mail\WelcomeMailable;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\PositionType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -126,18 +127,34 @@ class EmployeeController extends Controller
     }
 
     public function getEmployee(int $id)
-{
-    // Busca el empleado por su ID
-    $employee = Employee::find($id);
+    {
+        // Busca el empleado por su ID
+        $employee = Employee::find($id);
 
-    // Si no se encuentra el empleado, devuelve un error
-    if (!$employee) {
-        return response()->json([
-            'error' => 'Empleado no encontrado'
-        ], 404);
+        // Si no se encuentra el empleado, devuelve un error
+        if (!$employee) {
+            return response()->json([
+                'status' => '404'
+            ]);
+        }
+
+        if($employee->user->roles->isNotEmpty()) {
+            // Suponiendo que un usuario solo tiene un rol (puedes ajustar esto según tus necesidades)
+            return response()->json([
+                'status' => '405'
+            ]);
+
+        }
+        else{
+            return response()->json([
+                'id' => $employee->id,
+                'name' => $employee->name,
+                'last_name' => $employee->last_name,
+                'positionType' => $employee->positionType->type,
+                'email' => $employee->email
+            ]);
+        }
+
+
     }
-
-    // Si se encuentra el empleado, devuelve sus datos
-    return response()->json($employee);
-}
 }
