@@ -54,7 +54,7 @@
        <div class="col-md-6 d-md-block d-none bg-light p-0 mt-n1 vh-100 overflow-hidden" style="z-index: 1;">
           <!-- Cambio en la imagen de la sección derecha -->
           @php
-            $backgrounds = ['fondo1.png', 'fondo2.png', 'fondo3.png','fondo4.png'];
+            $backgrounds = ['fondo1.png', 'fondo2.png', 'fondo3.png','fondo4.png','fondo5.png'];
             $randomBackground = $backgrounds[array_rand($backgrounds)];
           @endphp
           <img src="{{asset('images/fondo/' . $randomBackground)}}" class="img-fluid gradient-main animated-scaleX" alt="Cuidado de Mascotas">
