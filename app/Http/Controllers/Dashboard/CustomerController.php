@@ -5,15 +5,24 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Requests\Customer\StoreRequest; // Importa la clase StoreRequest
+use App\DataTables\CustomersDataTable;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(CustomersDataTable $dataTable)
     {
-        return view('errors.maintenance');
+        $titleSubHeader = "Clientes";
+        $descriptionSubHeader = "Listado de clientes";
+
+        $pageTitle = "Clientes";
+        $assets = ['data-table'];
+        $headerAction = '<a href="'.route('customers.create').'" class="btn btn-sm btn-primary" role="button">Registrar Cliente</a>';
+
+        return $dataTable->render('global.datatable', compact('pageTitle', 'assets', 'titleSubHeader', 'descriptionSubHeader', 'headerAction'));
     }
 
     /**
@@ -23,15 +32,31 @@ class CustomerController extends Controller
     {
         $titleSubHeader = "Clientes";
         $descriptionSubHeader = "Registrar nuevo cliente";
-        return view('customer.register', compact('titleSubHeader', 'descriptionSubHeader'));
+
+        return view('customers.register', compact('titleSubHeader', 'descriptionSubHeader'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $customer = new Customer();
+
+        $customer->name = $validatedData['name'];
+        $customer->last_name = $validatedData['last_name'];
+        $customer->address = $validatedData['address'];
+        $customer->city = $validatedData['city'];
+        $customer->alternative_contact_name = $validatedData['alternative_contact_name'];
+        $customer->alternative_contact_phone_number = $validatedData['alternative_contact_phone_number'];
+        $customer->email = $validatedData['email'];
+        $customer->phone_number = $validatedData['phone_number'];
+
+        $customer->save();
+
+        return redirect()->route('customers.index')->with('success', 'Cliente registrado correctamente.');
     }
 
     /**
@@ -39,15 +64,20 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        return view('customers.show', compact('customer'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Customer $customer)
+    public function edit(int $id)
     {
-        //
+        $titleSubHeader = "Clientes";
+        $descriptionSubHeader = "Actualizar datos cliente";
+
+        $customer = Customer::findOrFail($id);
+
+        return view('customers.edit', compact('titleSubHeader', 'descriptionSubHeader', 'customer'));
     }
 
     /**
@@ -55,7 +85,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        // Lógica de actualización del cliente
     }
 
     /**
@@ -63,6 +93,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return redirect()->route('customers.index')->with('success', 'Cliente eliminado correctamente.');
     }
 }
