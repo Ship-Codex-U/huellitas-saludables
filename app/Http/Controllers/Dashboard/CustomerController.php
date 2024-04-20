@@ -20,7 +20,7 @@ class CustomerController extends Controller
 
         $pageTitle = "Clientes";
         $assets = ['data-table'];
-        $headerAction = '<a href="'.route('customers.create').'" class="btn btn-sm btn-primary" role="button">Registrar Cliente</a>';
+        $headerAction = '<a href="'.route('clientes.create').'" class="btn btn-sm btn-primary" role="button">Registrar Cliente</a>';
 
         return $dataTable->render('global.datatable', compact('pageTitle', 'assets', 'titleSubHeader', 'descriptionSubHeader', 'headerAction'));
     }
