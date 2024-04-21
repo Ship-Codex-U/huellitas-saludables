@@ -69,8 +69,6 @@ class CustomersDataTable extends DataTable
             Column::make("alternative_contact_phone_number")->title("Número CA")->name("alternative_contact_phone_number"),
             Column::make("email")->title("Correo")->name("email"),
             Column::make("phone_number")->title("Número")->name("phone_number"),
-            Column::make("created_at")->title("Creado")->name("created_at"),
-            Column::make("updated_at")->title("Actualizado")->name("updated_at"),
             Column::computed('action')
                 ->exportable(true)
                 ->printable(true)

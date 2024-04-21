@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Http\Requests\Customer\StoreRequest; // Importa la clase StoreRequest
+use App\Http\Requests\Client\StoreRequest; // Importa la clase StoreRequest
 use App\DataTables\CustomersDataTable;
 
 class CustomerController extends Controller
@@ -56,7 +56,7 @@ class CustomerController extends Controller
 
         $customer->save();
 
-        return redirect()->route('customers.index')->with('success', 'Cliente registrado correctamente.');
+        return redirect()->route('clientes.index')->with('success', 'Cliente registrado correctamente.');
     }
 
     /**
@@ -91,9 +91,26 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(int $id)
     {
-        $customer->delete();
-        return redirect()->route('customers.index')->with('success', 'Cliente eliminado correctamente.');
+        $customer = Customer::findOrFail($id);
+
+        $status = 'errors';
+        $message= __('global.delete_form_error', ['form' => __('customer.name')]);
+
+        if($customer != '') {
+            $customer->delete();
+            $status = 'success';
+            $message= __('global.delete_form', ['form' => __('customer.name')]);
+        }
+
+        if(request()->ajax()) {
+            return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);
+        }
+
+        return redirect()->back()->with($status,$message);
+
+
+        return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente.');
     }
 }

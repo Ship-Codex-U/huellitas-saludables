@@ -1,7 +1,5 @@
 <x-app-layout>
     <div>
-       <form method="POST" action="{{ route('clientes.store') }}" enctype="multipart/form-data">
-       @csrf
        <div class="row">
           <div class="col-xl-12 col-lg-8">
              <div class="card">
@@ -14,48 +12,92 @@
                    </div>
                 </div>
                 <div class="card-body">
-                   <div class="new-user-info">
-                         <div class="row">
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="name">Nombre: <span class="text-danger">*</span></label>
-                               <input type="text" name="name" class="form-control" placeholder="Nombre" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="last_name">Apellido: <span class="text-danger">*</span></label>
-                               <input type="text" name="last_name" class="form-control" placeholder="Apellido" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="address">Dirección:</label>
-                               <input type="text" name="address" class="form-control" placeholder="Dirección">
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="ciudad">Ciudad:</label>
-                               <input type="text" name="ciudad" class="form-control" placeholder="Ciudad">
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="email">Correo electrónico: <span class="text-danger">*</span></label>
-                               <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="phone_number">Número de teléfono:</label>
-                               <input type="text" name="phone_number" class="form-control" placeholder="Número de teléfono">
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="alternative_contact_name">Nombre de contacto alternativo:</label>
-                               <input type="text" name="alternative_contact_name" class="form-control" placeholder="Nombre de contacto alternativo">
-                            </div>
-                            <div class="form-group col-md-6">
-                               <label class="form-label" for="alternative_contact_phone_number">Número de teléfono de contacto alternativo:</label>
-                               <input type="text" name="alternative_contact_phone_number" class="form-control" placeholder="Número de teléfono de contacto alternativo">
-                            </div>
-                         </div>
 
-                         <button type="submit" class="btn btn-primary">Registrar Cliente</button>
-                   </div>
+                    <form method="POST" action="{{ route('clientes.store') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="new-customer-info">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="name">Nombre: <span class="text-danger">*</span></label>
+                                        <input type="text" name="name" class="form-control" placeholder="Nombre" required value="{{old('name')}}">
+                                        @error('name')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="last_name">Apellido: <span class="text-danger">*</span></label>
+                                        <input type="text" name="last_name" class="form-control" placeholder="Apellido" value="{{old('last_name')}}" required>
+                                        @error('last_name')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="address">Dirección:</label>
+                                        <input type="text" name="address" class="form-control" placeholder="Dirección" value="{{old('address')}}">
+                                        @error('address')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="city">Ciudad:</label>
+                                        <input type="text" name="city" class="form-control" placeholder="Ciudad" value="{{old('city')}}">
+                                        @error('city')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="email">Correo electrónico: <span class="text-danger">*</span></label>
+                                        <input type="email" name="email" class="form-control" placeholder="Correo electrónico" value="{{old('email')}}" required>
+                                        @error('email')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="phone_number">Número de teléfono:</label>
+                                        <input type="text" name="phone_number" class="form-control" placeholder="Número de teléfono" value="{{old('phone_number')}}">
+                                        @error('phone_number')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="alternative_contact_name">Nombre de contacto alternativo:</label>
+                                        <input type="text" name="alternative_contact_name" class="form-control" placeholder="Nombre de contacto alternativo" value="{{old('alternative_contact_name')}}">
+                                        @error('alternative_contact_name')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="form-label" for="alternative_contact_phone_number">Número de teléfono de contacto alternativo:</label>
+                                        <input type="text" name="alternative_contact_phone_number" class="form-control" placeholder="Número de teléfono de contacto alternativo" value="{{old('alternative_contact_phone_number')}}">
+                                        @error('alternative_contact_phone_number')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Registrar Cliente</button>
+                        </div>
+                    </form>
+
                 </div>
              </div>
           </div>
-         </div>
-       </form>
+        </div>
     </div>
  </x-app-layout>
