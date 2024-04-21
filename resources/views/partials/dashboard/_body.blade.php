@@ -26,6 +26,7 @@
 --}}
 @include('partials.dashboard._scripts')
 @include('partials.dashboard._app_toast')
+
 <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
