@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\DataTables\EmployeesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\StoreRequest;
+use App\Http\Requests\Employee\UpdateRequest;
 use App\Mail\WelcomeMailable;
 use App\Models\Employee;
 use App\Models\PositionType;
@@ -67,8 +68,17 @@ class EmployeeController extends Controller
             Mail::to($newEmployee->email)->send(new WelcomeMailable($newEmployee));
         }
 
+        $status = 'success';
+        $message= __('global.save_form_success', ['form' => (string)$newEmployee->id]);
 
-        return redirect()->route('empleados.index');
+
+        if($request->stay_on_this_page == "1"){
+            return redirect()->route('empleados.create')->with($status,$message);
+        }else{
+            return redirect()->route('empleados.index')->with($status,$message);
+        }
+
+
     }
 
     /**
@@ -91,13 +101,15 @@ class EmployeeController extends Controller
 
         $employee = Employee::with('positionType')->findOrFail($id);
 
+        $employee->date_birthday = date('m-d-Y', strtotime($employee->date_birthday));
+
         return view('employees.edit', compact('titleSubHeader', 'descriptionSubHeader', 'positionType', 'employee'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee)
+    public function update(UpdateRequest $request, int $id)
     {
         //
     }
@@ -108,6 +120,7 @@ class EmployeeController extends Controller
     public function destroy(int $id)
     {
         $employee = Employee::findOrFail($id);
+
         $status = 'errors';
         $message= __('global.delete_form_error', ['form' => __('employee.name')]);
 

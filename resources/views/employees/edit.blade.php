@@ -15,8 +15,9 @@
 
                     <div class="card-body">
 
-                        <form action="{{route('empleados.store')}}" method="POST">
+                        <form action="{{route('empleados.update', $employee->id)}}" method="POST">
                             @csrf
+                            @method('PUT')
 
                             <div class="new-employee-info">
                                 <h5 class="mb-3">Información del Empleado</h5>
@@ -143,7 +144,7 @@
                                             <option value="">Seleccione una opción</option>
 
                                             @foreach ($positionType as $type => $id)
-                                                <option value="{{$id}}">{{$type}}</option>
+                                                <option value="{{$id}}" @if(old('position', $employee->date_birthday) == $id) selected @endif>{{$type}}</option>
                                             @endforeach
 
                                         </select>

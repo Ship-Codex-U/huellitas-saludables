@@ -55,6 +55,9 @@ class EmployeesDataTable extends DataTable
                     ->parameters([
                         "processing" => true,
                         "autoWidth" => false,
+                        "language" => [
+                            "url" => asset('datatables/spanish_mx.json')
+                        ]
                     ]);
 
     }
