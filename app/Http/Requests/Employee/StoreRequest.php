@@ -26,12 +26,12 @@ class StoreRequest extends FormRequest
             'last_name' => 'required',
             'date_of_birth' => 'required|date',
             'email' => 'required|email',
-            'phone_number' => 'required|max_digits:10|min_digits:10',
+            'phone_number' => 'required|digits:10',
             'state' => 'required',
             'city' => 'required',
             'street_number' => 'required',
             'alternative_contact_name' => 'required',
-            'alternative_contact_phone_number' => 'required|max_digits:10|min_digits:10',
+            'alternative_contact_phone_number' => 'required|digits:10',
             'position' => 'required|integer',
             'send_confirmation_mail' => 'boolean'
         ];
