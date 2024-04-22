@@ -8,7 +8,7 @@
                       <div class="card-body">
                          <a href="{{route('dashboard')}}" class="navbar-brand d-flex align-items-center mb-3">
                             <!-- Cambio de icono a uno más adecuado para una veterinaria -->
-                            <img src="{{asset('images/logo/veterinary-logo.png')}}" width="100" class="text-primary border border-primary rounded" alt="Logo Huellitas Saludables">
+                            <img src="{{asset('images/logo/veterinary-logo.png')}}" width="100" alt="Logo Huellitas Saludables">
                             <h4 class="logo-title ms-3">{{env('APP_NAME', 'Huellitas Saludables')}}</h4>
                          </a>
                          <h2 class="mb-2 text-center">Iniciar Sesión</h2>
