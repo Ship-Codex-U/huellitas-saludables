@@ -1,100 +1,5 @@
 <x-app-layout layout="landing">
-    <style>
-        /* Estilos adicionales para la página */
-        .banner-one-img img {
-            border-radius: 15px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .banner-one-img img:hover {
-            transform: scale(1.05);
-        }
-
-        .inner-box {
-            background-color: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        .inner-box:hover {
-            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .map-section {
-            background-color: #f8f9fa; /* Cambiado el color de fondo */
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-            margin-top: 50px;
-            color: #000; /* Cambiado el color del texto */
-        }
-
-        .map-section h2 {
-            margin-bottom: 30px;
-            color: #007bff; /* Color azul para el título */
-        }
-
-        .map-container {
-            border-radius: 15px;
-            overflow: hidden; /* Añadido para que el mapa se ajuste al contenedor */
-        }
-
-        .map-container iframe {
-            border:0;
-            width: 100%; /* Ajustado el ancho al 100% */
-            height: 400px; /* Ajustado el alto */
-            border-radius: 15px;
-        }
-
-        /* Resto de estilos */
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-
-        .card-title {
-            color: #007bff; /* Color azul para el título */
-            transition: color 0.3s ease-in-out;
-        }
-
-        .card-text {
-            color: #6c757d;
-            transition: color 0.3s ease-in-out;
-        }
-
-        .card-img-top {
-            border-radius: 15px 15px 0 0;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-body p {
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: #212529;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            transition: color 0.3s ease-in-out;
-        }
-
-        h2:hover {
-            color: #007bff;
-        }
-    </style>
+<link rel="stylesheet" href="{{ asset('css/landing_page.css') }}">
 
     <div class="banner-one-app">
         <div class="container">
@@ -103,9 +8,6 @@
                     <img id="banner-image" src="{{ asset('images/banner/banner-top.png') }}" alt="banner" style="max-width: 100%;">
                 </div>
                 <div class="col-sm-6 inner-box">
-                    <p class="mb-2 text-uppercase text-secondary">
-                        Cuida a tu mascota
-                    </p>
                     <h1 class="text-secondary mb-4">La Felicidad De<br><span class="text-primary">Tu Mascota</span></h1>
                 </div>
             </div>
