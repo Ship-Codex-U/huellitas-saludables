@@ -26,7 +26,23 @@ class EmployeesDataTable extends DataTable
             ->editColumn('positionType.type', function($query) {
                 return $query->positionType->type ?? '-';
             })
-            ->addColumn('action', 'employees.action');
+            ->editColumn('employeeStatus.status', function ($query) {
+                $status = $query->employeeStatus->status ?? '-';
+                // Define el color según el estatus
+                $color = '';
+                if ($status === 'activo') {
+                    $color = 'green';
+                } elseif ($status === 'baja') {
+                    $color = 'red';
+                } else {
+                    $color = 'gray';
+                }
+
+                return "<span style='color: {$color};'>{$status}</span>";
+            })
+            ->addColumn('action', 'employees.action')
+            ->rawColumns(['employeeStatus.status', 'action']);
+
     }
 
     /**
@@ -37,7 +53,7 @@ class EmployeesDataTable extends DataTable
      */
     public function query(Employee $model): QueryBuilder
     {
-        return $model->newQuery()->with('positionType');
+        return $model->newQuery()->with('positionType', 'employeeStatus');
     }
 
     /**
@@ -55,6 +71,7 @@ class EmployeesDataTable extends DataTable
                     ->parameters([
                         "processing" => true,
                         "autoWidth" => false,
+                        "stateSave" => false,
                         "language" => [
                             "url" => asset('datatables/spanish_mx.json')
                         ]
@@ -71,8 +88,10 @@ class EmployeesDataTable extends DataTable
     {
         return [
             Column::make("id")->title("Numero Empleado")->name("id"),
-            Column::make("name")->title("Nombre")->name("id"),
+            Column::make("name")->title("Nombre")->name("name"),
             Column::make("last_name")->title("Apellidos")->name("last_name"),
+            Column::make("employeeStatus.status")->title("Estatus")->name("employeeStatus.status"),
+            Column::make("positionType.type")->title("Puesto")->name("positionType.type"),
             Column::make("date_birthday")->title("Cumpleaños")->name("date_birthday"),
             Column::make("email")->title("Correo")->name("email"),
             Column::make("phone_number")->title("Numero")->name("phone_number"),
@@ -81,10 +100,9 @@ class EmployeesDataTable extends DataTable
             Column::make("street_number")->title("Calle y numero")->name("street_number"),
             Column::make("alternative_contact_name")->title("Nombre CA")->name("alternative_contact_name"),
             Column::make("alternative_contact_phone_number")->title("Numero CA")->name("alternative_contact_phone_number"),
-            Column::make("positionType.type")->title("Puesto")->name("positionType.type"),
             Column::computed('action')
-                ->exportable(true)
-                ->printable(true)
+                ->exportable(false)
+                ->printable(false)
                 ->searchable(false)
                 ->width(60)
                 ->addClass('text-center hide-search'),

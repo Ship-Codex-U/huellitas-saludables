@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string("alternative_contact_name");
             $table->string("alternative_contact_phone_number");
             $table->foreignId("position_type_id")->constrained()->restrictOnDelete();
+            $table->foreignId("employee_status_id")->constrained()->restrictOnDelete();
             $table->timestamps();
         });
     }

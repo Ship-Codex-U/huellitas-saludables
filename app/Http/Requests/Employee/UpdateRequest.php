@@ -33,6 +33,7 @@ class UpdateRequest extends FormRequest
             'alternative_contact_name' => 'required|alpha_spaces',
             'alternative_contact_phone_number' => 'required|max_digits:10|min_digits:10',
             'position' => 'required|integer',
+            'status_e' => 'required|integer',
             'send_confirmation_mail' => 'integer',
             'stay_on_this_page' => 'integer'
         ];

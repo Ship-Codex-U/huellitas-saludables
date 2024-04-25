@@ -36,4 +36,9 @@ class Employee extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function employeeStatus() : BelongsTo
+    {
+        return $this->belongsTo(EmployeeStatus::class);
+    }
 }

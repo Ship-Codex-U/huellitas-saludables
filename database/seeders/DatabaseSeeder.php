@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             RoleTableSeeder::class,
             VaccineSeeder::class,
             PositionTypeSeeder::class,
+            EmployeeStatusSeeder::class,
             EmployeeSeeder::class,
             AppointmentStatusSeeder::class,
             PetTypeSeeder::class,

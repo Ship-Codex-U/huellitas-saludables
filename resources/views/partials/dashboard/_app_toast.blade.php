@@ -1,11 +1,20 @@
 <script type="text/javascript">
     {{-- Success Message --}}
-
     @if (Session::has('success'))
     Swal.fire({
     icon: 'success',
     title: 'Exito',
     text: '{{ Session::get("success") }}',
+    confirmButtonColor: "#3a57e8"
+    });
+    @endif
+
+    {{-- Warning Message --}}
+    @if (Session::has('undefinied'))
+    Swal.fire({
+    icon: 'warning',
+    title: 'Advertencia',
+    text: '{{ Session::get("undefinied") }}',
     confirmButtonColor: "#3a57e8"
     });
     @endif

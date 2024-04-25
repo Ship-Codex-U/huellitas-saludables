@@ -1,9 +1,8 @@
 <x-app-layout :assets="$assets ?? []" :titleSubHeader="$titleSubHeader" :descriptionSubHeader="$descriptionSubHeader">
      <div>
         <div class="row">
-            <div class="col-xl-12 col-lg-8">
+            <div class="col-xl-12 col-lg-12">
                 <div class="card">
-
                     <div class="card-header d-flex justify-content-between">
                     <div class="header-title">
                         <h4 class="card-title">Actualización de Datos</h4>
@@ -44,7 +43,7 @@
 
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="date_of_birth">Fecha de nacimiento: <span class="text-danger">*</span></label>
-                                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{old('date_of_birth',  $employee->date_of_birth)}}">
+                                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{old('date_of_birth',  $employee->date_birthday)}}">
                                         @error('date_of_birth')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -124,7 +123,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="form-label" for="alternative_contact_phone_number">Numero de Telefono: <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="alternative_contact_phone_number" name="alternative_contact_phone_number" placeholder="3333221144" value="{{old('alternative_contact_phone_number', $employee->alternative_contact_name)}}">
+                                        <input type="text" class="form-control" id="alternative_contact_phone_number" name="alternative_contact_phone_number" placeholder="3333221144" value="{{old('alternative_contact_phone_number', $employee->alternative_contact_phone_number)}}">
                                         @error('alternative_contact_phone_number')
                                             <div>
                                                 <span class="text-danger">{{$message}}</span>
@@ -140,11 +139,11 @@
                                 <div class="row">
                                     <div class="form-group col-md-12">
                                         <label class="form-label" for="position">Puesto de Trabajo: <span class="text-danger">*</span></label></label>
-                                        <select class="form-select" data-trigger name="position" id="position" value="{{old('position_type_id', $employee->position_type_id)}}">
+                                        <select class="form-select" data-trigger name="position" id="position">
                                             <option value="">Seleccione una opción</option>
 
                                             @foreach ($positionType as $type => $id)
-                                                <option value="{{$id}}" @if(old('position', $employee->date_birthday) == $id) selected @endif>{{$type}}</option>
+                                                <option value="{{$id}}" @if(old('position', $employee->position_type_id) == $id) selected @endif>{{$type}}</option>
                                             @endforeach
 
                                         </select>
@@ -159,8 +158,32 @@
                                 </div>
 
                                 <hr>
+                                <h5 class="mb-3">Estatus del empleado</h5>
 
-                                <button type="submit" class="btn btn-primary">Registrar Empleado</button>
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="form-label" for="status_e">Estatus: <span class="text-danger">*</span></label></label>
+                                        <select class="form-select" data-trigger name="status_e" id="status_e">
+                                            <option value="">Seleccione una opción</option>
+
+                                            @foreach ($employeeStatus as $status => $id)
+                                                <option value="{{$id}}" @if(old('status_e', $employee->employee_status_id) == $id) selected @endif>{{$status}}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                        @error('status_e')
+                                            <div>
+                                                <span class="text-danger">{{$message}}</span>
+                                             </div>
+                                        @enderror
+
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <button type="submit" class="btn btn-primary">Actualizar Datos</button>
                             </div>
 
                         </form>
