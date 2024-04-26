@@ -44,6 +44,7 @@
                                     </div>
                                     <!-- Agregar div condicional para mostrar las opciones de mascota -->
                                     <div id="petOptions" style="display: none;">
+                                        <!-- Aquí los campos para seleccionar el tipo de mascota y la raza -->
                                         <div class="form-group col-md-6">
                                             <label class="form-label" for="pet_type_id">Tipo de mascota: <span class="text-danger">*</span></label>
                                             <!-- Agrega un campo de selección para el tipo de mascota -->
@@ -62,10 +63,13 @@
                                         </div>
                                         <div class="form-group col-md-6" id="breedSelectField" style="display: none;">
                                             <label class="form-label" for="breed">Raza: <span class="text-danger">*</span></label>
-                                            <!-- Agrega un campo de selección para la raza -->
+                                            <!-- Agregar un campo de selección para la raza -->
                                             <select name="breed" class="form-control" id="breedSelect" required>
                                                 <option value="">Seleccionar</option>
+                                                <!-- Agregar opciones de razas para cada tipo de mascota -->
                                             </select>
+                                            <!-- Agregar una caja de texto para la raza "Otro" -->
+                                            <input type="text" name="other_breed" class="form-control mt-2" id="otherBreedInput" placeholder="Especificar otra raza" style="display: none;">
                                             @error('breed')
                                                 <div>
                                                     <span class="text-danger">{{ $message }}</span>
@@ -105,16 +109,17 @@
 <script>
     // Objeto JavaScript que contiene las razas para cada tipo de mascota
     var breedOptions = {
-        1: ['Golden Retriever', 'Labrador Retriever', 'Bulldog', 'Poodle', 'German Shepherd', 'Beagle', 'Rottweiler', 'Yorkshire Terrier', 'Dachshund', 'Boxer'],
-        2: ['Maine Coon', 'Siamese', 'Persian', 'Ragdoll', 'British Shorthair', 'Sphynx', 'Bengal', 'Russian Blue', 'Scottish Fold', 'Abyssinian'],
-        3: ['Canario', 'Periquito', 'Cacatúa', 'Loro', 'Papagayo', 'Ninfas', 'Agapornis', 'Loros Amazonas', 'Loros Pionus', 'Loros Eclectus'],
-        4: ['Hámster', 'Cobaya', 'Conejo', 'Chinchilla', 'Jerbo', 'Rata', 'Ratón', 'Erizo', 'Hurón', 'Degú']
+        1: ['Golden Retriever', 'Labrador Retriever', 'Bulldog', 'Poodle', 'German Shepherd', 'Beagle', 'Rottweiler', 'Yorkshire Terrier', 'Dachshund', 'Mestizo','Otro'],
+        2: ['Maine Coon', 'Siamese', 'Persian', 'Ragdoll', 'British Shorthair', 'Sphynx', 'Bengal', 'Russian Blue', 'Scottish Fold', 'Mestizo','Otro'],
+        3: ['Canario', 'Periquito', 'Cacatúa', 'Loro', 'Papagayo', 'Ninfas', 'Agapornis', 'Loros Amazonas', 'Looros Pionus', 'Loros Mestizo', 'Otro'],
+        4: ['Hámster', 'Cobaya', 'Conejo', 'Chinchilla', 'Jerbo', 'Rata', 'Ratón', 'Erizo', 'Hurón', 'Degú', 'Otro']
     };
 
     // Función para actualizar las opciones de raza según el tipo de mascota seleccionado
     document.getElementById('petTypeSelect').addEventListener('change', function() {
         var breedSelectField = document.getElementById('breedSelectField');
         var breedSelect = document.getElementById('breedSelect');
+        var otherBreedInput = document.getElementById('otherBreedInput');
         breedSelect.innerHTML = ''; // Limpiar opciones anteriores
         var selectedType = this.value;
         if (selectedType !== '') {
@@ -127,6 +132,16 @@
             breedSelectField.style.display = 'block'; // Mostrar el campo de selección de raza
         } else {
             breedSelectField.style.display = 'none'; // Ocultar el campo de selección de raza si no se selecciona ningún tipo de mascota
+        }
+    });
+
+    // Función para mostrar u ocultar la caja de texto para la raza "Otros"
+    document.getElementById('breedSelect').addEventListener('change', function() {
+        var otherBreedInput = document.getElementById('otherBreedInput');
+        if (this.value === 'Otro') {
+            otherBreedInput.style.display = 'block'; // Mostrar la caja de texto para "Otros"
+        } else {
+            otherBreedInput.style.display = 'none'; // Ocultar la caja de texto si se selecciona una raza diferente
         }
     });
 
