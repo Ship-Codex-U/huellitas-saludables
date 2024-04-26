@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->foreignId("pet_type_id")->constrained()->restrictOnDelete();
+            $table->string("pet_type");
             $table->string("breed");
             $table->string("weight");
             $table->string("height");

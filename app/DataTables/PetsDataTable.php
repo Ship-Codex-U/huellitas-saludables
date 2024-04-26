@@ -62,6 +62,7 @@ class PetsDataTable extends DataTable
         return [
             Column::make("id")->title("ID")->name("id"),
             Column::make("name")->title("Nombre")->name("name"),
+            Column::make("pet_type")->title("Tipo")->name("pet_type"),
             Column::make("breed")->title("Raza")->name("breed"),
             Column::make("weight")->title("Peso")->name("weight"),
             Column::make("height")->title("Altura")->name("height"),

@@ -12,11 +12,6 @@ class Pet extends Model
 {
     use HasFactory;
 
-    public function petType() : BelongsTo
-    {
-        return $this->belongsTo(PetType::class);
-    }
-
     public function customer() : BelongsTo
     {
         return $this->belongsTo(Customer::class);

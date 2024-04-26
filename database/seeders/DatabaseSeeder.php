@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
             EmployeeStatusSeeder::class,
             EmployeeSeeder::class,
             AppointmentStatusSeeder::class,
-            PetTypeSeeder::class,
             CustomerSeeder::class,
             PetSeeder::class,
             AppointmentSeeder::class,

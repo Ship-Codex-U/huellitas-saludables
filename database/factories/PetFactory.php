@@ -18,7 +18,7 @@ class PetFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'pet_type_id' => $this->faker->numberBetween(1, 50),
+            'pet_type' => $this->faker->word(),
             'breed' => $this->faker->word(),
             'weight' => strval($this->faker->numberBetween(1, 80)),
             'height' => strval($this->faker->numberBetween(1, 150)),
