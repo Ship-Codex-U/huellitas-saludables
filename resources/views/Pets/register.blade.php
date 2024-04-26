@@ -46,16 +46,16 @@
                                     <div id="petOptions" style="display: none;">
                                         <!-- Aquí los campos para seleccionar el tipo de mascota y la raza -->
                                         <div class="form-group col-md-6">
-                                            <label class="form-label" for="pet_type_id">Tipo de mascota: <span class="text-danger">*</span></label>
+                                            <label class="form-label" for="pet_type">Tipo de mascota: <span class="text-danger">*</span></label>
                                             <!-- Agrega un campo de selección para el tipo de mascota -->
-                                            <select name="pet_type_id" class="form-control" id="petTypeSelect" required>
+                                            <select name="pet_type" class="form-control" id="petTypeSelect" required>
                                                 <option value="">Seleccionar</option>
-                                                <option value="1">Canino</option>
-                                                <option value="2">Felino</option>
-                                                <option value="3">Ave</option>
-                                                <option value="4">Roedor</option>
+                                                <option value="Canino">Canino</option>
+                                                <option value="Felino">Felino</option>
+                                                <option value="Ave">Ave</option>
+                                                <option value="Roedor">Roedor</option>
                                             </select>
-                                            @error('pet_type_id')
+                                            @error('pet_type')
                                                 <div>
                                                     <span class="text-danger">{{ $message }}</span>
                                                 </div>

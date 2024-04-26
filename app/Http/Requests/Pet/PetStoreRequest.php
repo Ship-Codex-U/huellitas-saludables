@@ -25,7 +25,7 @@ class PetStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'pet_type_id' => 'required|integer|exists:pet_types,id',
+            'pet_type' => 'required|string|max:255',
             'breed' => 'nullable|string|max:255',
             'weight' => 'nullable|string|max:255',
             'height' => 'nullable|string|max:255',
