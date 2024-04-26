@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Dashboard;
 use App\DataTables\EmployeesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\StoreRequest;
+use App\Http\Requests\Employee\UpdateRequest;
 use App\Mail\WelcomeMailable;
 use App\Models\Employee;
+use App\Models\EmployeeStatus;
 use App\Models\PositionType;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Ramsey\Uuid\Type\Integer;
@@ -47,6 +50,7 @@ class EmployeeController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        dd($request);
         $newEmployee = new Employee();
 
         $newEmployee->name = $request->name;
@@ -61,14 +65,25 @@ class EmployeeController extends Controller
         $newEmployee->alternative_contact_phone_number = $request->alternative_contact_phone_number;
         $newEmployee->position_type_id = $request->position;
 
+        $newEmployee->employee_status_id = 1; //Estatus Activo
+
         $newEmployee->save();
 
         if($request->send_confirmation_mail == "1"){
             Mail::to($newEmployee->email)->send(new WelcomeMailable($newEmployee));
         }
 
+        $status = 'success';
+        $message= __('global.save_form_success', ['form' => (string)$newEmployee->id]);
 
-        return redirect()->route('empleados.index');
+
+        if($request->stay_on_this_page == "1"){
+            return redirect()->route('empleados.create')->with($status,$message);
+        }else{
+            return redirect()->route('empleados.index')->with($status,$message);
+        }
+
+
     }
 
     /**
@@ -84,22 +99,64 @@ class EmployeeController extends Controller
      */
     public function edit(int $id)
     {
-        $titleSubHeader = "Empleados";
-        $descriptionSubHeader = "Actualizar datos empleado";
+        try{
+            $employee = Employee::with('positionType')->findOrFail($id);
 
-        $positionType = PositionType::pluck('id', 'type');
+            $titleSubHeader = "Empleados";
+            $descriptionSubHeader = "Actualizar datos empleado";
 
-        $employee = Employee::with('positionType')->findOrFail($id);
+            $positionType = PositionType::pluck('id', 'type');
+            $employeeStatus = EmployeeStatus::pluck('id', 'status');
 
-        return view('employees.edit', compact('titleSubHeader', 'descriptionSubHeader', 'positionType', 'employee'));
+            $employee->date_birthday = date('Y-m-d', strtotime($employee->date_birthday));
+
+            return view('employees.edit', compact('titleSubHeader', 'descriptionSubHeader', 'employee', 'positionType', 'employeeStatus'));
+
+        }catch(ModelNotFoundException $ex){
+            $status = 'error';
+            $message= 'No se encuentra el registro con el id proporcionado';
+
+            return redirect()->route('empleados.index')->with($status,$message);
+
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee)
+    public function update(UpdateRequest $request, int $id)
     {
-        //
+        $status = "undefinied";
+        $message = "Mensaje no establecido";
+
+        try{
+            $dataEmployee = Employee::findOrFail($id);
+
+            $dataEmployee->name = $request->name;
+            $dataEmployee->last_name = $request->last_name;
+            $dataEmployee->date_birthday = date('Y-m-d', strtotime($request->date_of_birth));
+            $dataEmployee->email = $request->email;
+            $dataEmployee->phone_number = $request->phone_number;
+            $dataEmployee->state = $request->state;
+            $dataEmployee->city = $request->city;
+            $dataEmployee->street_number = $request->street_number;
+            $dataEmployee->alternative_contact_name = $request->alternative_contact_name;
+            $dataEmployee->alternative_contact_phone_number = $request->alternative_contact_phone_number;
+            $dataEmployee->position_type_id = $request->position;
+            $dataEmployee->employee_status_id = $request->status_e;
+
+            $dataEmployee->save();
+
+            $status = "success";
+            $message = __('global.update_form_success', ['form' => (string)$dataEmployee->id]);;
+
+        }catch(ModelNotFoundException $ex){
+            $status = 'success';
+            $message= 'No se encuentra el registro con el id proporcionado';
+
+        }
+
+        return redirect()->route('empleados.index')->with($status,$message);
     }
 
     /**
@@ -107,18 +164,26 @@ class EmployeeController extends Controller
      */
     public function destroy(int $id)
     {
-        $employee = Employee::findOrFail($id);
-        $status = 'errors';
-        $message= __('global.delete_form_error', ['form' => __('employee.name')]);
+        $status = "undefinied";
+        $message = "Mensaje no establecido";
 
-        if($employee != '') {
-            $employee->delete();
-            $status = 'success';
-            $message= __('global.delete_form', ['form' => __('employee.name')]);
-        }
+        try{
+            $employee = Employee::findOrFail($id);
 
-        if(request()->ajax()) {
-            return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);
+            if($employee != '') {
+                $employee->delete();
+                $status = 'success';
+                $message= __('global.delete_form', ['form' => __('employee.name')]);
+
+                if(request()->ajax()) {
+                    return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);
+                }
+            }
+
+        }catch(ModelNotFoundException $ex){
+            $status = 'errors';
+            $message= 'No se encuentra el registro con el id proporcionado';
+
         }
 
         return redirect()->back()->with($status,$message);

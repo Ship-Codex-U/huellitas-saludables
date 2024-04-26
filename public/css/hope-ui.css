@@ -70,7 +70,7 @@ hr {
   --bs-gray-dark-rgb: 52, 58, 64;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
-  --bs-body-color-rgb: 138, 146, 166;
+  --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 245, 246, 250;
   --bs-font-sans-serif: "Inter", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -79,7 +79,7 @@ hr {
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
-  --bs-body-color: #8A92A6;
+  --bs-body-color: #212529;
   --bs-body-bg: #F5F6FA;
   --bs-border-width: 1px;
   --bs-border-style: solid;
