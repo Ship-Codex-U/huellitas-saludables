@@ -57,9 +57,31 @@
             $backgrounds = ['fondo1.png', 'fondo2.png', 'fondo3.png','fondo4.png','fondo5.png','fondo6.png','fondo7.png'];
             $randomBackground = $backgrounds[array_rand($backgrounds)];
           @endphp
-          <img src="{{asset('images/fondo/' . $randomBackground)}}" class="img-fluid gradient-main animated-scaleX" alt="Cuidado de Mascotas">
+          <img id="background-image" src="{{asset('images/fondo/' . $randomBackground)}}" class="img-fluid gradient-main animated-scaleX" alt="Cuidado de Mascotas">
        </div>
     </div>
  </section>
  </x-guest-layout>
 
+ <script>
+    // Función para cambiar la imagen de fondo cada 7 segundos
+    window.onload = function() {
+        const backgrounds = ['fondo1.png', 'fondo2.png', 'fondo3.png','fondo4.png','fondo5.png','fondo6.png','fondo7.png'];
+        let index = 0;
+
+        setInterval(function() {
+            index = (index + 1) % backgrounds.length;
+            const imageUrl = '{{asset("images/fondo/")}}' + backgrounds[index];
+
+            // Crear nueva imagen
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('background-image').src = imageUrl;
+            };
+            img.onerror = function() {
+                console.error('Error cargando la imagen:', imageUrl);
+            };
+            img.src = imageUrl;
+        }, 7000); // Cambiar cada 7 segundos (7000 milisegundos)
+    };
+</script>
