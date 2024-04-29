@@ -66,4 +66,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function userStatus() : BelongsTo
+    {
+        return $this->belongsTo(UserStatus::class);
+    }
 }

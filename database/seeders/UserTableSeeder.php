@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'user_type' => 'dev',
                 'employee_id' => '1',
-                'status' => 'active'
+                'user_status_id' => '1'
             ],
             [
                 'first_name' => 'Usuario',
@@ -34,7 +34,7 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'user_type' => 'admin',
                 'employee_id' => '2',
-                'status' => 'active',
+                'user_status_id' => '1',
             ],
             [
                 'first_name' => 'Usuario',
@@ -44,7 +44,7 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'user_type' => 'rh',
                 'employee_id' => '3',
-                'status' => 'active',
+                'user_status_id' => '1',
             ],
             [
                 'first_name' => 'Usuario',
@@ -54,7 +54,7 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'user_type' => 'receptionist',
                 'employee_id' => '4',
-                'status' => 'active'
+                'user_status_id' => '1'
             ],
             [
                 'first_name' => 'Usuario',
@@ -64,7 +64,7 @@ class UserTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'user_type' => 'veterinarian',
                 'employee_id' => '5',
-                'status' => 'active'
+                'user_status_id' => '1'
             ]
         ];
         foreach ($users as $key => $value) {

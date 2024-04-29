@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             AppointmentSeeder::class,
             ConsultationHistorySeeder::class,
             PetVaccineSeeder::class,
+            UserStatusSeeder::class,
             UserTableSeeder::class,
         ]);
         #\App\Models\User::factory(40)->create()->each(function($user) {

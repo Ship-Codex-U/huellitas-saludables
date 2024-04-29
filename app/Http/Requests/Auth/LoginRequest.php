@@ -54,6 +54,16 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        // Verificar si el usuario está activo
+        $user = Auth::user(); // Obtiene el usuario autenticado
+        if ($user->userStatus->status != 'activo') {
+            // Si el usuario no está activo, desautenticarlo y lanzar una excepción de validación
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'Tu cuenta está desactivada.',
+            ]);
+        }
     }
 
     /**

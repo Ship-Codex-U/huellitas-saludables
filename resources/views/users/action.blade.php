@@ -7,6 +7,7 @@
                 <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
         </span>
+        Editar Usuario
     </a>
     @if(auth()->user()->hasRole('admin') && auth()->id() !== $id)
     <?php

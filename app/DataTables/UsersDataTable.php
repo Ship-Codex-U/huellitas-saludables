@@ -6,6 +6,7 @@ use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class UsersDataTable extends DataTable
 {
@@ -19,26 +20,21 @@ class UsersDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('userProfile.country', function($query) {
-                return $query->userProfile->country ?? '-';
+            ->editColumn('user_type', function($query) {
+                return $query->roles->first()->title;
             })
-            ->editColumn('userProfile.company_name', function($query) {
-                return $query->userProfile->company_name ?? '-';
-            })
-            ->editColumn('status', function($query) {
-                $status = 'warning';
-                switch ($query->status) {
-                    case 'active':
-                        $status = 'primary';
-                        break;
-                    case 'inactive':
-                        $status = 'danger';
-                        break;
-                    case 'banned':
-                        $status = 'dark';
-                        break;
+            ->editColumn('userStatus.status', function ($query) {
+                $status = $query->userStatus->status ?? '-';
+                $color = '';
+
+                if ($status === 'activo') {
+                    $color = 'success';
+                } elseif ($status === 'baja') {
+                    $color = 'danger';
+                } else {
+                    $color = 'secondary';
                 }
-                return '<span class="text-capitalize badge bg-'.$status.'">'.$query->status.'</span>';
+                return '<span class="text-capitalize badge rounded-pill bg-'.$color.'">'.$status.'</span>';
             })
             ->editColumn('created_at', function($query) {
                 return date('Y/m/d',strtotime($query->created_at));
@@ -58,7 +54,7 @@ class UsersDataTable extends DataTable
                 });
             })
             ->addColumn('action', 'users.action')
-            ->rawColumns(['action','status']);
+            ->rawColumns(['action','userStatus.status']);
     }
 
     /**
@@ -67,10 +63,10 @@ class UsersDataTable extends DataTable
      * @param \App\Models\User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query()
+    public function query(User $model): QueryBuilder
     {
-        $model = User::query()->with('userProfile');
-        return $this->applyScopes($model);
+        $query = $model->newQuery()->with('userProfile', 'userStatus');
+        return $this->applyScopes($query);
     }
 
     /**
@@ -85,10 +81,13 @@ class UsersDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('<"row align-items-center"<"col-md-2" l><"col-md-6" B><"col-md-4"f>><"table-responsive my-3" rt><"row align-items-center" <"col-md-6" i><"col-md-6" p>><"clear">')
-
                     ->parameters([
                         "processing" => true,
                         "autoWidth" => false,
+                        "stateSave" => false,
+                        "language" => [
+                            "url" => asset('datatables/spanish_mx.json')
+                        ]
                     ]);
     }
 
@@ -100,13 +99,15 @@ class UsersDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            ['data' => 'id', 'name' => 'id', 'title' => 'id'],
-            ['data' => 'full_name', 'name' => 'full_name', 'title' => 'FULL NAME', 'orderable' => false],
-            ['data' => 'email', 'name' => 'email', 'title' => 'Email'],
-            ['data' => 'userProfile.country', 'name' => 'userProfile.country', 'title' => 'Country'],
-            ['data' => 'status', 'name' => 'status', 'title' => 'Status'],
-            ['data' => 'userProfile.company_name', 'name' => 'userProfile.company_name', 'title' => 'Company'],
-            ['data' => 'created_at', 'name' => 'created_at', 'title' => 'Join Date'],
+            Column::make("id")->title("Numero Empleado")->name("id"),
+            Column::make("first_name")->title("Nombre")->name("first_name"),
+            Column::make("last_name")->title("Apellidos")->name("last_name"),
+            Column::make("email")->title("Usuario")->name("email"),
+            Column::make("userStatus.status")->title("Estatus")->name("userStatus.status")
+            ->orderable(false)
+            ->searchable(true),
+            Column::make("created_at")->title("Alta de usuario")->name("created_at"),
+            Column::make("user_type")->title("Rol")->name("user_type"),
             Column::computed('action')
                   ->exportable(true)
                   ->printable(true)

@@ -10,9 +10,11 @@ use App\Mail\WelcomeMailable;
 use App\Models\Employee;
 use App\Models\EmployeeStatus;
 use App\Models\PositionType;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Type\Integer;
 
 class EmployeeController extends Controller
@@ -50,7 +52,6 @@ class EmployeeController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        dd($request);
         $newEmployee = new Employee();
 
         $newEmployee->name = $request->name;
@@ -83,15 +84,14 @@ class EmployeeController extends Controller
             return redirect()->route('empleados.index')->with($status,$message);
         }
 
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Employee $employee)
+    public function show(int $id)
     {
-        //
+        return redirect()->route('empleados.index');
     }
 
     /**
@@ -192,32 +192,27 @@ class EmployeeController extends Controller
     public function getEmployee(int $id)
     {
         // Busca el empleado por su ID
-        $employee = Employee::find($id);
+        try{
+            $employee = Employee::findOrFail($id);
 
-        // Si no se encuentra el empleado, devuelve un error
-        if (!$employee) {
+            if($employee->user){
+                return response()->json([
+                    'status' => '405'
+                ]);
+            }else{
+                return response()->json([
+                    'name' => $employee->name,
+                    'last_name' => $employee->last_name,
+                    'positionType' => $employee->positionType->type,
+                    'number_r' => $employee->id,
+                    'email' => $employee->email
+                ]);
+            }
+
+        }catch(ModelNotFoundException $ex){
             return response()->json([
                 'status' => '404'
             ]);
         }
-
-        if($employee->user->roles->isNotEmpty()) {
-            // Suponiendo que un usuario solo tiene un rol (puedes ajustar esto según tus necesidades)
-            return response()->json([
-                'status' => '405'
-            ]);
-
-        }
-        else{
-            return response()->json([
-                'id' => $employee->id,
-                'name' => $employee->name,
-                'last_name' => $employee->last_name,
-                'positionType' => $employee->positionType->type,
-                'email' => $employee->email
-            ]);
-        }
-
-
     }
 }

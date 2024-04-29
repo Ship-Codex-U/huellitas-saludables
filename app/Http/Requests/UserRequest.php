@@ -76,22 +76,7 @@ class UserRequest extends FormRequest
         ];
     }
 
-     /**
-     * @param Validator $validator
-     */
-    protected function failedValidation(Validator $validator){
-        $data = [
-            'status' => true,
-            'message' => $validator->errors()->first(),
-            'all_message' =>  $validator->errors()
-        ];
 
-        if ($this->ajax()) {
-            throw new HttpResponseException(response()->json($data,422));
-        } else {
-            throw new HttpResponseException(redirect()->back()->withInput()->with('errors', $validator->errors()));
-        }
-    }
 
 
 }

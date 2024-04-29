@@ -74,19 +74,6 @@
         </a>
         <ul class="sub-nav collapse" id="sidebar-user" data-bs-parent="#sidebar">
             <li class="nav-item">
-                <a class="nav-link {{activeRoute(route('usuarios.show', 1))}}" href="{{route('usuarios.show', 1)}}">
-                    <i class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
-                            <g>
-                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                            </g>
-                        </svg>
-                    </i>
-                    <i class="sidenav-mini-icon"> P </i>
-                    <span class="item-name">Perfil de Usuario</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link {{activeRoute(route('usuarios.create'))}}" href="{{route('usuarios.create')}}">
                     <i class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">

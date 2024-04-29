@@ -10,11 +10,11 @@
     @endif
 
     {{-- Warning Message --}}
-    @if (Session::has('undefinied'))
+    @if (Session::has('warning'))
     Swal.fire({
     icon: 'warning',
     title: 'Advertencia',
-    text: '{{ Session::get("undefinied") }}',
+    text: '{{ Session::get("warning") }}',
     confirmButtonColor: "#3a57e8"
     });
     @endif
@@ -26,6 +26,16 @@
     icon: 'error',
     title: 'Opps!!!',
     text: '{{Session::get("error")}}',
+    confirmButtonColor: "#3a57e8"
+    });
+    @endif
+
+    {{-- Undefined Message --}}
+    @if (Session::has('undefinied'))
+    Swal.fire({
+    icon: 'warning',
+    title: 'Advertencia',
+    text: '{{ Session::get("undefinied") }}',
     confirmButtonColor: "#3a57e8"
     });
     @endif

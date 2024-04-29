@@ -25,20 +25,7 @@ class UserFactory extends Factory
         $fname = $this->faker->firstName;
         $lname = $this->faker->lastName;
         $fullname = Str::lower($fname).Str::lower($lname);
-        $status = $this->faker->numberBetween(0,2);
-        switch ($status) {
-            case 1:
-                $status = 'active';
-                break;
-
-            case 2:
-                $status = 'inactive';
-                break;
-
-                default:
-                $status = 'pending';
-                break;
-        }
+        $status = $this->faker->numberBetween(1,2);
         return [
             'username' => $fullname,
             'first_name' => $fname,
@@ -49,7 +36,7 @@ class UserFactory extends Factory
             'password' => bcrypt('password'),
             'phone_number' => $this->faker->phoneNumber,
             'user_type' => 'user',
-            'status' => $status
+            'user_status_id' => $status
         ];
     }
 }

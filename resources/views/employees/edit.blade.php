@@ -156,30 +156,31 @@
 
                                     </div>
                                 </div>
+                                @if (auth()->user()->employee->id !== $employee->id)
+                                    <hr>
+                                    <h5 class="mb-3">Estatus del empleado</h5>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="form-label" for="status_e">Estatus: <span class="text-danger">*</span></label></label>
+                                            <select class="form-select" data-trigger name="status_e" id="status_e">
+                                                <option value="">Seleccione una opción</option>
 
-                                <hr>
-                                <h5 class="mb-3">Estatus del empleado</h5>
+                                                @foreach ($employeeStatus as $status => $id)
+                                                    <option value="{{$id}}" @if(old('status_e', $employee->employee_status_id) == $id) selected @endif>{{$status}}</option>
+                                                @endforeach
 
-                                <div class="row">
-                                    <div class="form-group col-md-12">
-                                        <label class="form-label" for="status_e">Estatus: <span class="text-danger">*</span></label></label>
-                                        <select class="form-select" data-trigger name="status_e" id="status_e">
-                                            <option value="">Seleccione una opción</option>
+                                            </select>
 
-                                            @foreach ($employeeStatus as $status => $id)
-                                                <option value="{{$id}}" @if(old('status_e', $employee->employee_status_id) == $id) selected @endif>{{$status}}</option>
-                                            @endforeach
+                                            @error('status_e')
+                                                <div>
+                                                    <span class="text-danger">{{$message}}</span>
+                                                </div>
+                                            @enderror
 
-                                        </select>
-
-                                        @error('status_e')
-                                            <div>
-                                                <span class="text-danger">{{$message}}</span>
-                                             </div>
-                                        @enderror
-
+                                        </div>
                                     </div>
-                                </div>
+
+                                @endif
 
                                 <hr>
 

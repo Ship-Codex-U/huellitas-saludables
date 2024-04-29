@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Employee;
+namespace App\Http\Requests\User;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreRequest extends FormRequest
 {
@@ -25,30 +27,33 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|alpha_spaces',
             'last_name' => 'required|alpha_spaces',
-            'date_of_birth' => 'required|date',
-            'email' => 'required|email|unique:employees,email',
-            'phone_number' => 'required|digits:10',
-            'state' => 'required',
-            'city' => 'required',
-            'street_number' => 'required',
-            'alternative_contact_name' => 'required|alpha_spaces',
-            'alternative_contact_phone_number' => 'required|max_digits:10|min_digits:10',
-            'position' => [
+            'position' => 'required|alpha_spaces',
+            'role' => [
                 'required',
                 'integer',
-                Rule::exists('position_types', 'id'), // Agrega la regla exists
+                Rule::exists('roles', 'id'), // Agrega la regla exists
             ],
-            'send_confirmation_mail' => 'integer',
-            'stay_on_this_page' => 'integer'
+            'email' => 'required|email|unique:users,email',
+            'password' => [
+                'required',
+                'string',
+                'min:8', // Asegura que la contraseña tenga al menos 8 caracteres
+                'confirmed',
+            ],
         ];
     }
 
     public function messages() : array
     {
         return [
+            'password.regex' => 'La contraseña debe de tener al menos: 1 letra mayuscula, 1 letra minuscula, 1 número y 1 símbolos.',
+            'password.min' => 'La contraseña debe de ser minimo 8 caracteres.',
             'email.unique' => 'Este correo ya fue registrado, por favor verifique.',
             'position.integer' => 'El valor seleccionado para la posición no es válido. Por favor, elija una opción válida.',
             'position.exists' => 'El valor seleccionado para la posición no es válido. Por favor, elija una opción válida.',
         ];
     }
+
+
+
 }

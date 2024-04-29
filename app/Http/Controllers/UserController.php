@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
 use App\Models\User;
 use App\Helpers\AuthHelper;
+use App\Http\Requests\User\StoreRequest;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\UserRequest;
+use App\Models\Employee;
+use App\Models\UserStatus;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -24,7 +28,7 @@ class UserController extends Controller
         $pageTitle = "Lista Usuarios";
         $auth_user = AuthHelper::authSession();
         $assets = ['data-table'];
-        $headerAction = '<a href="'.route('usuarios.create').'" class="btn btn-sm btn-primary" role="button">Add User</a>';
+        $headerAction = '<a href="'.route('usuarios.create').'" class="btn btn-sm btn-primary" role="button">Registrar Nuevo Usuario</a>';
         return $dataTable->render('global.datatable', compact('pageTitle','auth_user','assets', 'titleSubHeader', 'descriptionSubHeader', 'headerAction'));
     }
 
@@ -38,9 +42,9 @@ class UserController extends Controller
         $titleSubHeader = "Usuarios";
         $descriptionSubHeader = "Alta de Usuario";
 
-        $roles = Role::where('status',1)->get()->pluck('title', 'id');
+        $userRoles = Role::where('status',1)->get()->pluck('id', 'title');
 
-        return view('users.register', compact('roles', 'titleSubHeader', 'descriptionSubHeader'));
+        return view('users.register', compact('userRoles', 'titleSubHeader', 'descriptionSubHeader'));
     }
 
     /**
@@ -49,22 +53,44 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(StoreRequest $request)
     {
-        $request['password'] = bcrypt($request->password);
+        try{
+            $employee = Employee::findOrFail($request->number_r);
 
-        $request['username'] = $request->username ?? stristr($request->email, "@", true) . rand(100,1000);
+            if($employee->name == $request->name &&
+               $employee->last_name == $request->last_name &&
+               $employee->positionType->type == $request->position &&
+               $employee->email == $request->email){
 
-        $user = User::create($request->all());
+                $newUser = new User();
+                $newUser->first_name = $request->name;
+                $newUser->last_name = $request->last_name;
+                $newUser->email = $request->email;
+                $newUser->user_type = Role::find($request->role)->name;
+                $newUser->assignRole(Role::find($request->role)->name);
+                $newUser->user_status_id = 1;
+                $newUser->employee_id = $request->number_r;
+                $newUser->password = bcrypt($request->password);
+                $newUser->save();
 
-        storeMediaFile($user,$request->profile_image, 'profile_image');
+            }else{
+                $status = 'error';
+                $message= 'Los datos no coinciden 2, por favor verifique';
 
-        $user->assignRole('user');
+                return redirect()->route('usuarios.create')->withInput($request->toArray())->with($status,$message);
+            }
+        }catch(ModelNotFoundException $ex){
+            $status = 'error';
+            $message= 'Los datos no coinciden 1, por favor verifique';
 
-        // Save user Profile data...
-        $user->userProfile()->create($request->userProfile);
+            return redirect()->route('usuarios.create')->withInput($request->toArray())->with($status,$message);
+        }
 
-        return redirect()->route('usuarios.index')->withSuccess(__('message.msg_added',['name' => __('users.store')]));
+        $status = 'success';
+        $message = 'Se a registrado al usuario: ' . $request->email . 'correctamente';
+        return redirect()->route('usuarios.index')->with($status,$message);
+
     }
 
     /**
@@ -75,11 +101,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $data = User::with('userProfile','roles')->findOrFail($id);
-
-        $profileImage = getSingleMedia($data, 'profile_image');
-
-        return view('users.profile', compact('data', 'profileImage'));
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -90,6 +112,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        try{
+            $user = User::with('userStatus')->findOrFail($id);
+
+        }catch(ModelNotFoundException $ex){
+
+        }
+
+
         $data = User::with('userProfile','roles')->findOrFail($id);
 
         $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
@@ -98,7 +128,7 @@ class UserController extends Controller
 
         $profileImage = getSingleMedia($data, 'profile_image');
 
-        return view('users.form', compact('data','id', 'roles', 'profileImage'));
+        return view('users.edit', compact('data','id', 'roles', 'profileImage'));
     }
 
     /**
