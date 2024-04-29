@@ -20,6 +20,7 @@ class PetsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            // Agrega una columna de acciones para editar y eliminar mascotas
             ->addColumn('action', 'pets.action');
     }
 
@@ -31,6 +32,7 @@ class PetsDataTable extends DataTable
      */
     public function query(Pet $model): QueryBuilder
     {
+        // Retorna una nueva consulta con la relación 'customer' cargada
         return $model->newQuery()->with('customer');
     }
 
@@ -41,6 +43,7 @@ class PetsDataTable extends DataTable
      */
     public function html(): HtmlBuilder
     {
+        // Configura las opciones generales del DataTable
         return $this->builder()
                     ->setTableId('pets-table')
                     ->columns($this->getColumns())
@@ -59,6 +62,7 @@ class PetsDataTable extends DataTable
      */
     public function getColumns(): array
     {
+        // Define las columnas que se mostrarán en la tabla
         return [
             Column::make("id")->title("ID")->name("id"),
             Column::make("name")->title("Nombre")->name("name"),
@@ -67,6 +71,7 @@ class PetsDataTable extends DataTable
             Column::make("weight")->title("Peso")->name("weight"),
             Column::make("height")->title("Altura")->name("height"),
             Column::make("customer.name")->title("Cliente")->name("customer.name"),
+            // Define una columna computada para acciones
             Column::computed('action')
                 ->exportable(true)
                 ->printable(true)

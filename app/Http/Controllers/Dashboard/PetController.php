@@ -44,18 +44,32 @@ class PetController extends Controller
      */
     public function store(PetStoreRequest $request)
     {
-        // Guardar la nueva mascota en la base de datos.
+        // Crear una nueva instancia del modelo Pet
         $pet = new Pet();
+    
+        // Asignar los valores de los campos de la nueva mascota desde la solicitud
         $pet->name = $request->name;
-        $pet->pet_type_id = $request->pet_type_id;
+        $pet->pet_type = $request->pet_type;
         $pet->breed = $request->breed;
         $pet->weight = $request->weight;
         $pet->height = $request->height;
         $pet->customer_id = $request->customer_id;
+    
+        // Guardar la nueva mascota en la base de datos
         $pet->save();
-
-        return redirect()->route('pets.index')->with('success', 'Mascota registrada correctamente.');
+    
+        // Establecer el estado y mensaje para el redireccionamiento
+        $status = 'success';
+        $message= 'Mascota registrada correctamente';
+    
+        // Redireccionar según la opción seleccionada
+        if($request->stay_on_this_page == "1"){
+            return redirect()->route('mascotas.create')->with($status,$message);
+        }else{
+            return redirect()->route('mascotas.index')->with($status,$message);
+        }
     }
+    
 
     /**
      * Display the specified resource.
