@@ -91,10 +91,14 @@ class PetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pet $pet)
+    public function edit(int $id)
     {
+        // Buscar la mascota por su ID
+        $mascota = Pet::findOrFail($id);
+        
+
         // Mostrar el formulario para editar una mascota.
-        return view('pets.edit', compact('pet'));
+        return view('pets.edit', compact('mascota'));
     }
 
     /**
@@ -102,19 +106,42 @@ class PetController extends Controller
      */
     public function update(Request $request, Pet $pet)
     {
+        // Validar los datos del formulario
+        $request->validate([
+            'name' => 'required',
+            'pet_type' => 'required',
+            'breed' => 'required',
+            'weight' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
+            'customer_id' => 'required|exists:customers,id',
+        ]);
+
         // Actualizar los detalles de la mascota en la base de datos.
-        $pet->update($request->all());
-        return redirect()->route('pets.index')->with('success', 'Detalles de la mascota actualizados correctamente.');
+        $pet->update([
+            'name' => $request->name,
+            'pet_type' => $request->pet_type,
+            'breed' => $request->breed === 'Otro' ? $request->other_breed : $request->breed,
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'customer_id' => $request->customer_id,
+        ]);
+
+        // Redireccionar con un mensaje de éxito
+        return redirect()->route('mascotas.index')->with('success', 'Detalles de la mascota actualizados correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pet $pet)
+    public function destroy(int $id)
     {
-        // Eliminar una mascota de la base de datos.
+        // Buscar la mascota por su ID
+        $pet = Pet::findOrFail($id);
+        
+        // Eliminar la mascota de la base de datos
         $pet->delete();
-        return redirect()->route('pets.index')->with('success', 'Mascota eliminada correctamente.');
+        
+        // Redireccionar con un mensaje de éxito
+        return redirect()->route('mascotas.index')->with('success', 'Mascota eliminada correctamente.');
     }
 }
-
