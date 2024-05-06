@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
@@ -50,7 +51,14 @@ class PetController extends Controller
         // Asignar los valores de los campos de la nueva mascota desde la solicitud
         $pet->name = $request->name;
         $pet->pet_type = $request->pet_type;
-        $pet->breed = $request->breed;
+
+        // Verificar si el valor de la raza es "Otro", en cuyo caso se usa el valor ingresado manualmente
+        if ($request->breed === 'Otro') {
+            $pet->breed = $request->other_breed;
+        } else {
+            $pet->breed = $request->breed;
+        }
+
         $pet->weight = $request->weight;
         $pet->height = $request->height;
         $pet->customer_id = $request->customer_id;
@@ -109,3 +117,4 @@ class PetController extends Controller
         return redirect()->route('pets.index')->with('success', 'Mascota eliminada correctamente.');
     }
 }
+
