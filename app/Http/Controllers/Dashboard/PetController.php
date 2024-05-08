@@ -93,42 +93,53 @@ class PetController extends Controller
      */
     public function edit(int $id)
     {
-        // Buscar la mascota por su ID
+        // Definición de variables para el encabezado y la descripción de la página
+        $titleSubHeader = "Mascotas";
+        $descriptionSubHeader = "Actualizar datos Mascota";
+    
+        // Buscar la mascota por su ID. Si no se encuentra, arrojará una excepción.
         $mascota = Pet::findOrFail($id);
-        
-
-        // Mostrar el formulario para editar una mascota.
-        return view('pets.edit', compact('mascota'));
+    
+        // Renderizar la vista 'pets.edit' y pasar las variables necesarias a la vista
+        return view('pets.edit', compact('titleSubHeader', 'descriptionSubHeader', 'mascota'));
     }
+    
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pet $pet)
+/**
+ * Update the specified resource in storage.
+ */
+    public function update(Request $request, int $id)
     {
-        // Validar los datos del formulario
+        // Validar los datos recibidos del formulario
         $request->validate([
-            'name' => 'required',
-            'pet_type' => 'required',
-            'breed' => 'required',
-            'weight' => 'nullable|numeric',
-            'height' => 'nullable|numeric',
-            'customer_id' => 'required|exists:customers,id',
+            'name' => 'required|string|max:255',
+            'pet_type' => 'required|string|max:255',
+            'breed' => 'required|string|max:255',
+            'weight' => 'nullable|string|max:255',
+            'height' => 'nullable|string|max:255',
         ]);
 
-        // Actualizar los detalles de la mascota en la base de datos.
-        $pet->update([
-            'name' => $request->name,
-            'pet_type' => $request->pet_type,
-            'breed' => $request->breed === 'Otro' ? $request->other_breed : $request->breed,
-            'weight' => $request->weight,
-            'height' => $request->height,
-            'customer_id' => $request->customer_id,
-        ]);
+        // Buscar la mascota por su ID
+        $pet = Pet::findOrFail($id);
+
+        // Actualizar los campos de la mascota con los datos recibidos
+        $pet->name = $request->name;
+        $pet->pet_type = $request->pet_type;
+        $pet->breed = $request->breed;
+        $pet->weight = $request->weight;
+        $pet->height = $request->height;
+
+        // Guardar los cambios en la base de datos
+        $pet->save();
 
         // Redireccionar con un mensaje de éxito
-        return redirect()->route('mascotas.index')->with('success', 'Detalles de la mascota actualizados correctamente.');
+        return redirect()->route('mascotas.index')->with('success', 'Mascota actualizada correctamente.');
     }
+
 
     /**
      * Remove the specified resource from storage.

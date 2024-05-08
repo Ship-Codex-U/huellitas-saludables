@@ -76,19 +76,19 @@
             var commonBreeds = [];
             switch(selectedPetType) {
                 case 'Canino':
-                    commonBreeds = ['Labrador Retriever', 'Bulldog', 'Beagle', 'Poodle', 'Golden Retriever', 'German Shepherd', 'Boxer', 'Siberian Husky', 'Dachshund', 'Yorkshire Terrier', 'Chihuahua', 'Shih Tzu', 'Pug', 'Rottweiler', 'Doberman Pinscher', 'Mestizo', 'Otro'];
+                    commonBreeds = ['Labrador Retriever', 'Bulldog', 'Beagle', 'Poodle', 'Golden Retriever', 'German Shepherd', 'Boxer', 'Siberian Husky', 'Dachshund', 'Yorkshire Terrier', 'Chihuahua', 'Shih Tzu', 'Pug', 'Rottweiler', 'Doberman Pinscher','otro'];
                     break;
                 case 'Felino':
-                    commonBreeds = ['Maine Coon', 'Siamese', 'Persian', 'Ragdoll', 'British Shorthair', 'Sphynx', 'Bengal', 'Abyssinian', 'Scottish Fold', 'Norwegian Forest Cat', 'Birman', 'Russian Blue', 'Devon Rex', 'Manx', 'American Shorthair', 'Mestizo', 'Otro'];
+                    commonBreeds = ['Maine Coon', 'Siamese', 'Persian', 'Ragdoll', 'British Shorthair', 'Sphynx', 'Bengal', 'Abyssinian', 'Scottish Fold', 'Norwegian Forest Cat', 'Birman', 'Russian Blue', 'Devon Rex', 'Manx', 'American Shorthair','otro'];
                     break;
                 case 'Ave':
-                    commonBreeds = ['Periquito', 'Canario', 'Agapornis', 'Cacatúa', 'Loro', 'Cotorra', 'Ninfa', 'Jilguero', 'Diamante Mandarín', 'Paloma', 'Papagayo', 'Guacamayo', 'Ninfálide', 'Cardenal', 'Pardillo', 'Mestizo', 'Otro'];
+                    commonBreeds = ['Periquito', 'Canario', 'Agapornis', 'Cacatúa', 'Loro', 'Cotorra', 'Ninfa', 'Jilguero', 'Diamante Mandarín', 'Paloma', 'Papagayo', 'Guacamayo', 'Ninfálide', 'Cardenal', 'Pardillo','otro'];
                     break;
                 case 'Roedor':
-                    commonBreeds = ['Hamster', 'Conejo', 'Cobaya', 'Ratón', 'Jerbo', 'Hámster Ruso', 'Hámster Dorado', 'Chinchilla', 'Degú', 'Rata', 'Hurón', 'Erizo', 'Ardilla', 'Marmota', 'Capibara', 'Mestizo', 'Otro'];
+                    commonBreeds = ['Hamster', 'Conejo', 'Cobaya', 'Ratón', 'Jerbo', 'Hámster Ruso', 'Hámster Dorado', 'Chinchilla', 'Degú', 'Rata', 'Hurón', 'Erizo', 'Ardilla', 'Marmota', 'Capibara','otro'];
                     break;
                 default:
-                    commonBreeds = ['Mestizo', 'Otro'];
+                    commonBreeds = [];
             }
             var breedSelect = $('#breed');
             breedSelect.empty().append('<option value="">Seleccionar</option>');
@@ -102,5 +102,16 @@
                 $('#other_breed').hide();
             }
         });
+
+        // Seleccione automáticamente el tipo de mascota y la raza previamente seleccionados al cargar la página
+        var prevPetType = "{{ $mascota->pet_type }}";
+        var prevBreed = "{{ $mascota->breed }}";
+        $('#pet_type').val(prevPetType).trigger('change');
+        $('#breed').val(prevBreed);
+        if (prevPetType === 'Otro') {
+            $('#other_breed').show();
+        } else {
+            $('#other_breed').hide();
+        }
     });
 </script>

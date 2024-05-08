@@ -62,8 +62,6 @@
                                         <label class="form-label" for="breed">Raza: <span class="text-danger">*</span></label>
                                         <select class="form-select" name="breed" id="breed">
                                             <option value="">Seleccionar</option>
-                                            <option value="Mestizo" @if(old('breed') == 'Mestizo') selected @endif>Mestizo</option>
-                                            <option value="Otro" @if(old('breed') == 'Otro') selected @endif>Otro</option>
                                         </select>
                                         <input type="text" class="form-control mt-2" id="other_breed" name="other_breed" placeholder="Especificar otra raza" style="display: none;">
                                         @error('breed')
@@ -135,7 +133,7 @@
                     commonBreeds = ['Hamster', 'Conejo', 'Cobaya', 'Ratón', 'Jerbo', 'Hámster Ruso', 'Hámster Dorado', 'Chinchilla', 'Degú', 'Rata', 'Hurón', 'Erizo', 'Ardilla', 'Marmota', 'Capibara', 'Mestizo', 'Otro'];
                     break;
                 default:
-                    commonBreeds = ['Mestizo', 'Otro'];
+                    commonBreeds = [];
             }
             var breedSelect = $('#breed');
             breedSelect.empty().append('<option value="">Seleccionar</option>');
