@@ -12,6 +12,8 @@ use App\Http\Requests\UserRequest;
 use App\Models\Employee;
 use App\Models\UserStatus;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -58,6 +60,13 @@ class UserController extends Controller
         try{
             $employee = Employee::findOrFail($request->number_r);
 
+            if($employee->employee_status_id == 2){
+                $status = 'error';
+                $message= 'Usuario no valido . . . ';
+
+                return redirect()->route('usuarios.index')->with($status,$message);
+            }
+
             if($employee->name == $request->name &&
                $employee->last_name == $request->last_name &&
                $employee->positionType->type == $request->position &&
@@ -76,19 +85,19 @@ class UserController extends Controller
 
             }else{
                 $status = 'error';
-                $message= 'Los datos no coinciden 2, por favor verifique';
+                $message= 'Los datos no coinciden (0x2), por favor verifique';
 
                 return redirect()->route('usuarios.create')->withInput($request->toArray())->with($status,$message);
             }
         }catch(ModelNotFoundException $ex){
             $status = 'error';
-            $message= 'Los datos no coinciden 1, por favor verifique';
+            $message= 'Usuario no encontrado . . . ';
 
             return redirect()->route('usuarios.create')->withInput($request->toArray())->with($status,$message);
         }
 
         $status = 'success';
-        $message = 'Se a registrado al usuario: ' . $request->email . 'correctamente';
+        $message = 'Se a registrado al usuario: ' . $request->email . '\n' . 'correctamente';
         return redirect()->route('usuarios.index')->with($status,$message);
 
     }
@@ -113,22 +122,40 @@ class UserController extends Controller
     public function edit($id)
     {
         try{
-            $user = User::with('userStatus')->findOrFail($id);
+            $user = User::with('userStatus', 'roles', 'employee')->findOrFail($id);
+            $userAuth = Auth::user();
+
+            if($user->hasRole('dev') && $userAuth->hasRole('admin')){
+                $status = 'error';
+                $message= 'Usuario no valido';
+
+                return redirect()->route('usuarios.index')->with($status,$message);
+            }
+
+            $userRoles = Role::pluck('id', 'title');
+            $userStatus = UserStatus::pluck('id', 'status');
+            $diableRoleInput = false;
+            $diableStatusInput = false;
+
+            if($user->hasPermissionTo('dashboard.users') && $userAuth->id === $user->id){
+                $diableRoleInput = true;
+            }
+
+            if($userAuth->id === $user->id){
+                $diableStatusInput = true;
+            }
+
+            $titleSubHeader = "Usuarios";
+            $descriptionSubHeader = "Actualización de Usuario";
+
+            return view('users.edit', compact('user', 'userRoles', 'userStatus', 'diableRoleInput', 'diableStatusInput', 'titleSubHeader', 'descriptionSubHeader'));
 
         }catch(ModelNotFoundException $ex){
+            $status = 'error';
+            $message= 'No se encuentra el registro con el id proporcionado';
 
+            return redirect()->route('usuarios.index')->with($status,$message);
         }
-
-
-        $data = User::with('userProfile','roles')->findOrFail($id);
-
-        $data['user_type'] = $data->roles->pluck('id')[0] ?? null;
-
-        $roles = Role::where('status',1)->get()->pluck('title', 'id');
-
-        $profileImage = getSingleMedia($data, 'profile_image');
-
-        return view('users.edit', compact('data','id', 'roles', 'profileImage'));
     }
 
     /**
@@ -140,36 +167,53 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, $id)
     {
-        // dd($request->all());
-        $user = User::with('userProfile')->findOrFail($id);
+        if (!empty($request['password']) || !empty($request['password_confirmation'])) {
+            // Aplicar reglas de validación específicas para la contraseña
+            $passwordValidationRules = [
+                'password' => ['required', 'string', 'confirmed', 'min:8'], // Puedes ajustar estas reglas según tus estándares de seguridad
+            ];
 
-        $role = Role::find($request->user_role);
-        if(env('IS_DEMO')) {
-            if($role->name === 'admin'&& $user->user_type === 'admin') {
-                return redirect()->back()->with('error', 'Permission denied');
+            // Validar los datos de la contraseña
+            $request->validate($passwordValidationRules);
+        }
+
+        try{
+            $user = User::findOrFail($id);
+            $userAuth = Auth::user();
+
+            if(!($user->hasPermissionTo('dashboard.users') && $userAuth->id === $user->id)){
+                $user->user_type = Role::find($request->role)->name;
+
+                // Obtener el nuevo rol al que deseas asignar al usuario
+                $newRole = Role::where('name', $user->user_type)->first();
+
+                if ($user && $newRole) {
+                    // Quitar cualquier rol anterior que el usuario pudiera tener
+                    $user->syncRoles([$newRole->id]);
+                }
             }
+
+            if(!($userAuth->id === $user->id)){
+                $user->user_status_id = intval($request->status_e);
+            }
+
+            $user->email = $request->email;
+
+            $user->password = $request->password != '' ? bcrypt($request->password) : $user->password;
+
+            $user->save();
+
+            $status = 'success';
+            $message = 'Se ha actualizado al usuario: ' . $request->email . '\n' . 'correctamente';
+
+            return redirect()->route('usuarios.index')->with($status,$message);
+
+        }catch(ModelNotFoundException $ex){
+            $status = 'error';
+            $message= 'Registro Invalido';
+
+            return redirect()->route('usuarios.index')->with($status,$message);
         }
-        $user->assignRole($role->name);
-
-        $request['password'] = $request->password != '' ? bcrypt($request->password) : $user->password;
-
-        // User user data...
-        $user->fill($request->all())->update();
-
-        // Save user image...
-        if (isset($request->profile_image) && $request->profile_image != null) {
-            $user->clearMediaCollection('profile_image');
-            $user->addMediaFromRequest('profile_image')->toMediaCollection('profile_image');
-        }
-
-        // user profile data....
-        $user->userProfile->fill($request->userProfile)->update();
-
-        if(auth()->check()){
-            return redirect()->route('usuarios.index')->withSuccess(__('message.msg_updated',['name' => __('message.user')]));
-        }
-        return redirect()->back()->withSuccess(__('message.msg_updated',['name' => 'My Profile']));
-
     }
 
     /**
@@ -178,23 +222,34 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        $user = User::findOrFail($id);
-        $status = 'errors';
-        $message= __('global-message.delete_form', ['form' => __('users.title')]);
+        try{
+            $plainTextPassword = "";
+            $user = User::findOrFail($id);
 
-        if($user!='') {
+            if (Hash::check($plainTextPassword, $user->password)) {
+                Auth::logoutOtherDevices($plainTextPassword); // La contraseña en texto plano se utiliza para validar el cierre de sesión en otros dispositivos
+            }
+            $user->roles()->detach();
+            $user->permissions()->detach();
+
+
             $user->delete();
+
             $status = 'success';
-            $message= __('global-message.delete_form', ['form' => __('users.title')]);
-        }
+            $message= 'Usuario eliminado con exito';
+            $datatable_reload = 'dataTable_wrapper';
 
-        if(request()->ajax()) {
-            return response()->json(['status' => true, 'message' => $message, 'datatable_reload' => 'dataTable_wrapper']);
-        }
 
-        return redirect()->back()->with($status,$message);
+            return redirect()->route('usuarios.index')->with($status,$message, $datatable_reload);
+
+        }catch(ModelNotFoundException $ex){
+            $status = 'error';
+            $message= 'Usuario no encontrado.';
+
+            return redirect()->route('usuarios.index')->with($status,$message);
+        }
 
     }
 }

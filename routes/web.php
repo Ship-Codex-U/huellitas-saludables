@@ -16,6 +16,8 @@ use App\Models\ConsultationHistory;
 use Illuminate\Support\Facades\Artisan;
 // Packages
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckUserStatus;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,7 +53,7 @@ Route::resourceVerbs([
 ]);
 
 //Rutas internas - Dashboard
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', CheckUserStatus::class]], function () {
     // Permission Module
     Route::get('/roles',[RolePermission::class, 'index'])->name('role.list')->middleware('can:dashboard.role');
     Route::resource('permission',PermissionController::class)->middleware('can:dashboard.role');

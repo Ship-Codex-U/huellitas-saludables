@@ -151,7 +151,7 @@ class EmployeeController extends Controller
             $message = __('global.update_form_success', ['form' => (string)$dataEmployee->id]);;
 
         }catch(ModelNotFoundException $ex){
-            $status = 'success';
+            $status = 'error';
             $message= 'No se encuentra el registro con el id proporcionado';
 
         }
@@ -198,6 +198,10 @@ class EmployeeController extends Controller
             if($employee->user){
                 return response()->json([
                     'status' => '405'
+                ]);
+            }elseif($employee->employee_status_id == 2){
+                return response()->json([
+                    'status' => '406'
                 ]);
             }else{
                 return response()->json([

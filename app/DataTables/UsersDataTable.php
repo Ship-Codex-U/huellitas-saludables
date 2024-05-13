@@ -7,6 +7,8 @@ use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class UsersDataTable extends DataTable
 {
@@ -54,7 +56,8 @@ class UsersDataTable extends DataTable
                 });
             })
             ->addColumn('action', 'users.action')
-            ->rawColumns(['action','userStatus.status']);
+            ->addColumn('action-d', 'users.action-delete')
+            ->rawColumns(['action', 'action-d','userStatus.status']);
     }
 
     /**
@@ -65,8 +68,26 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
+        $user = Auth::user();
+
+        // Obtener el rol del usuario autenticado
+        $userRole = $user->roles->first()->name;
+
+        // Inicializar la consulta
         $query = $model->newQuery()->with('userProfile', 'userStatus');
-        return $this->applyScopes($query);
+
+        // Aplicar restricción basada en el rol del usuario autenticado
+        if ($user->hasPermissionTo('dashboard.users')) {
+            if(!$user->hasRole('dev')){
+                return $query->whereDoesntHave('roles', function ($query) {
+                    $query->where('name', 'dev');
+                });
+            }else{
+                return $query;
+            }
+            // Si el usuario es administrador, mostrar todos los usuarios
+            return $query;
+        }
     }
 
     /**
@@ -113,7 +134,15 @@ class UsersDataTable extends DataTable
                   ->printable(true)
                   ->searchable(false)
                   ->width(60)
-                  ->addClass('text-center hide-search'),
+                  ->addClass('text-center hide-search')
+                  ->title(''),
+            Column::computed('action-d')
+                  ->exportable(true)
+                  ->printable(true)
+                  ->searchable(false)
+                  ->width(60)
+                  ->addClass('text-center hide-search')
+                  ->title(''),
         ];
     }
 

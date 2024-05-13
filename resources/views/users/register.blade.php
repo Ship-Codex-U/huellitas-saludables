@@ -9,16 +9,14 @@
                    </div>
                 </div>
                 <div class="card-body">
-
-                        <div class="form-group">
-                             <label class="form-label" for="idemployee">ID del empleado: <span class="text-danger">*</span></label>
-                             <input type="text" class="form-control" id="employee_id" name="employee_id">
-                         </div>
-                         <div class="form-group">
-                             <button type="button" id="search_employee" class="btn btn-primary">Buscar Empleado</button>
-                         </div>
-
-                 </div>
+                    <div class="form-group">
+                        <label class="form-label" for="idemployee">ID del empleado: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="employee_id" name="employee_id">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="search_employee" class="btn btn-primary">Buscar Empleado</button>
+                    </div>
+                </div>
              </div>
          </div>
           <div class="col-xl-9 col-lg-8">
@@ -150,24 +148,22 @@
                 url:'/empleado/' + employeeID,
                 success:function(data){
                     if(data.status == '404'){
-                        showAlertWarning("No se encontró ningún empleado con ese ID");
-
+                        showAlertWarning("No se encontró ningún empleado con ese ID.");
+                    }else if(data.status == '405'){
+                        showAlertWarning("Este empleado ya tiene un usuario asignado.");
+                    }else if(data.status == '406'){
+                        showAlertWarning("Este empleado tiene el estatus de baja.");
                     }else{
-                        if(data.status == '405'){
-                            showAlertWarning("Este empleado ya tiene un usuario asignado");
-
-                        }else{
-                            $('#name').val(data.name);
-                            $('#last_name').val(data.last_name);
-                            $('#position').val(data.positionType);
-                            $('#number_r').val(data.number_r);
-                            $('#email').val(data.email);
-                        }
+                        $('#name').val(data.name);
+                        $('#last_name').val(data.last_name);
+                        $('#position').val(data.positionType);
+                        $('#number_r').val(data.number_r);
+                        $('#email').val(data.email);
                     }
-                    }
-                });
+                }
+              });
         } else {
-            showAlertWarning("Por favor ingrese el numero de empleado valido");
+            showAlertWarning("Por favor ingrese un numero de empleado valido");
         }
         });
     });

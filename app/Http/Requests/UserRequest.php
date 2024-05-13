@@ -34,6 +34,11 @@ class UserRequest extends FormRequest
         switch ($method) {
             case 'post':
                 $rules = [
+                    'employee_id' => 'required|integer',
+                    'position' => 'required|max:20',
+                    'username' => 'required|max:20',
+                    'username' => 'required|max:20',
+                    'username' => 'required|max:20',
                     'username' => 'required|max:20',
                     'password' => 'required|confirmed|min:8',
                     'email' => 'required|max:191|email|unique:users',

@@ -47,7 +47,7 @@ class UpdateRequest extends FormRequest
             'status_e' => [
                 'required',
                 'integer',
-                Rule::exists('position_types', 'id'), // Agrega la regla exists
+                Rule::exists('employee_statuses', 'id'), // Agrega la regla exists
             ],
             'send_confirmation_mail' => 'integer',
             'stay_on_this_page' => 'integer'
