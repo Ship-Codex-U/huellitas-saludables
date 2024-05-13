@@ -12,9 +12,9 @@ use Yajra\DataTables\Services\DataTable;
 class PetsDataTable extends DataTable
 {
     /**
-     * Build DataTable class.
+     * Construye la clase DataTable.
      *
-     * @param QueryBuilder $query Results from query() method.
+     * @param QueryBuilder $query Resultados del método query().
      * @return \Yajra\DataTables\EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
@@ -25,7 +25,7 @@ class PetsDataTable extends DataTable
     }
 
     /**
-     * Get query source of dataTable.
+     * Obtiene la fuente de la consulta de la tabla de datos.
      *
      * @param \App\Models\Pet $model
      * @return \Illuminate\Database\Eloquent\Builder
@@ -37,7 +37,7 @@ class PetsDataTable extends DataTable
     }
 
     /**
-     * Optional method if you want to use html builder.
+     * Método opcional si deseas utilizar el constructor de HTML.
      *
      * @return \Yajra\DataTables\Html\Builder
      */
@@ -56,7 +56,7 @@ class PetsDataTable extends DataTable
     }
 
     /**
-     * Get the dataTable columns definition.
+     * Obtiene la definición de las columnas de la tabla de datos.
      *
      * @return array
      */
@@ -65,12 +65,12 @@ class PetsDataTable extends DataTable
         // Define las columnas que se mostrarán en la tabla
         return [
             Column::make("id")->title("ID")->name("id"),
+            Column::make("customer.name")->title("Cliente")->name("customer.name")->searchable(true),
             Column::make("name")->title("Nombre")->name("name"),
             Column::make("pet_type")->title("Tipo")->name("pet_type"),
             Column::make("breed")->title("Raza")->name("breed"),
             Column::make("weight")->title("Peso")->name("weight"),
             Column::make("height")->title("Altura")->name("height"),
-            Column::make("customer.name")->title("Cliente")->name("customer.name"),
             // Define una columna computada para acciones
             Column::computed('action')
                 ->exportable(true)
@@ -82,7 +82,7 @@ class PetsDataTable extends DataTable
     }
 
     /**
-     * Get filename for export.
+     * Obtiene el nombre de archivo para la exportación.
      *
      * @return string
      */
