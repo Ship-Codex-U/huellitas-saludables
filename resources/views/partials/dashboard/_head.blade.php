@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" href="{{asset('vendor/fullcalendar/css/main.css')}}">
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" />
@@ -17,7 +18,6 @@
 <link rel='stylesheet' href="{{asset('vendor/fullcalendar/list/main.css')}}" />
 <link rel="stylesheet" href="{{asset('vendor/Leaflet/leaflet.css')}}" />
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.css">
 
 
 

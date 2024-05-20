@@ -45,7 +45,6 @@ class UpdateRequest extends FormRequest
                 Rule::exists('position_types', 'id'), // Agrega la regla exists
             ],
             'status_e' => [
-                'required',
                 'integer',
                 Rule::exists('employee_statuses', 'id'), // Agrega la regla exists
             ]

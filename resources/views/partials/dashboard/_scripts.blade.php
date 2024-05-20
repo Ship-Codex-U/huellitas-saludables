@@ -42,8 +42,8 @@
 @endif
 
 
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales-all.min.js"></script>
+<script src="{{asset('vendor/fullcalendar/js/main.js')}}"></script>
+<script src="{{asset('vendor/fullcalendar/js/locales-all.min.js')}}"></script>
 
 <script src="{{ asset('vendor/flatpickr/dist/flatpickr.min.js') }}"></script>
 <script src="{{ asset('js/plugins/flatpickr.js') }}" defer></script>

@@ -70,6 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 formData.elements["startDate"].setAttribute('value', selectedDateStr);
                 formData.elements["startTime"].setAttribute('value', selectedTimeStr);
 
+                // Establecer el campo de entrada como solo lectura
+                formData.elements["startDate"].readOnly = true;
+                formData.elements["startTime"].readOnly = true;
+
                 $("#eventM").modal("show");
 
                 // Deshabilitar el campo de búsqueda de mascotas
@@ -115,6 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Deshabilitar el campo de búsqueda de mascotas
                 $('#searchPetInputMD').prop('disabled', false);
 
+                // Establecer el campo de entrada como solo lectura
+                formDataMD.elements["startDateMD"].readOnly = true;
+                formDataMD.elements["startTimeMD"].readOnly = true;
 
                 formDataMD.elements["idEventMD"].setAttribute('value', event.id);
                 formDataMD.elements["startDateMD"].setAttribute('value', event.startDate);

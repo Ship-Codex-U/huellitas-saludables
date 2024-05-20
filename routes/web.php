@@ -36,15 +36,6 @@ Route::get('/storage', function () {
     Artisan::call('storage:link');
 });
 
-Route::get('/redis-test', function () {
-    try {
-        Redis::set('key', 'value');
-        return Redis::get('key');
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-});
-
 //Informacion
 Route::get('/informacion-proyecto', [HomeController::class, 'uisheet'])->name('uisheet');
 

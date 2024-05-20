@@ -13,6 +13,7 @@ use App\Models\PositionType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -144,7 +145,11 @@ class EmployeeController extends Controller
             $dataEmployee->alternative_contact_name = $request->alternative_contact_name;
             $dataEmployee->alternative_contact_phone_number = $request->alternative_contact_phone_number;
             $dataEmployee->position_type_id = $request->position;
-            $dataEmployee->employee_status_id = $request->status_e;
+            $userAuth = Auth::user();
+
+            if( !($userAuth->employee->id && $dataEmployee->id) ){
+                $dataEmployee->employee_status_id = $request->status_e;
+            }
 
             $dataEmployee->save();
 
