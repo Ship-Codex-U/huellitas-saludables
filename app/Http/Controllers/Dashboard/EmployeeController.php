@@ -13,6 +13,7 @@ use App\Models\PositionType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Type\Integer;
@@ -219,4 +220,26 @@ class EmployeeController extends Controller
             ]);
         }
     }
+
+    public function searchVeterinarians(Request $request)
+    {
+        $searchQuery = $request->input('searchQuery');
+
+        $veterinarians = Employee::where('position_type_id', 1)
+        ->where(function($query) use ($searchQuery) {
+            $query->where(DB::raw("CONCAT(id, ' ', name, ' ', last_name)"), 'LIKE', "%$searchQuery%");
+        })
+        ->get()
+        ->map(function($employee) {
+            return [
+                'id' => $employee->id,
+                'name' => $employee->name,
+                'full_name' => $employee->name . ' ' . $employee->last_name,
+            ];
+        });
+
+        return response()->json($veterinarians);
+    }
+
+
 }

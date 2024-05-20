@@ -32,14 +32,18 @@
 
 @if(in_array('calender',$assets ?? []))
 <!-- Fullcalender Javascript -->
-{{-- {{-- <script src="{{asset('vendor/fullcalendar/core/main.js')}}"></script>
+<script src="{{asset('vendor/fullcalendar/core/main.js')}}"></script>
 <script src="{{asset('vendor/fullcalendar/daygrid/main.js')}}"></script>
 <script src="{{asset('vendor/fullcalendar/timegrid/main.js')}}"></script>
 <script src="{{asset('vendor/fullcalendar/list/main.js')}}"></script>
-<script src="{{asset('vendor/fullcalendar/interaction/main.js')}}"></script> --}}
+<script src="{{asset('vendor/fullcalendar/interaction/main.js')}}"></script>
 <script src="{{asset('vendor/moment.min.js')}}"></script>
 <script src="{{asset('js/plugins/calender.js')}}"></script>
 @endif
+
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales-all.min.js"></script>
 
 <script src="{{ asset('vendor/flatpickr/dist/flatpickr.min.js') }}"></script>
 <script src="{{ asset('js/plugins/flatpickr.js') }}" defer></script>

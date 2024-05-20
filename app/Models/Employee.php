@@ -41,4 +41,11 @@ class Employee extends Model
     {
         return $this->belongsTo(EmployeeStatus::class);
     }
+
+    public function scopeVeterinarians($query)
+    {
+        return $query->whereHas('positionType', function($query) {
+            $query->where('name', 'Veterinario');
+        });
+    }
 }

@@ -17,11 +17,11 @@ class AppointmentStatusSeeder extends Seeder
         $data = [
                     [
                         'id' => 1,
-                        'status' => 'Solicitado'
+                        'status' => 'Solicitada'
                     ],
                     [
                         'id' => 2,
-                        'status' => 'Agendado'
+                        'status' => 'Programada'
                     ],
                     [
                         'id' => 3,
@@ -33,7 +33,11 @@ class AppointmentStatusSeeder extends Seeder
                     ],
                     [
                         'id' => 5,
-                        'status' => 'Cumplido'
+                        'status' => 'No Asistió'
+                    ],
+                    [
+                        'id' => 6,
+                        'status' => 'Completada'
                     ]
                 ];
 

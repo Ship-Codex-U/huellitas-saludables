@@ -27,7 +27,7 @@ class EmployeeFactory extends Factory
             'street_number' => $this->faker->streetAddress(),
             'alternative_contact_name' => $this->faker->firstName(),
             'alternative_contact_phone_number' => '0123456789',
-            'position_type_id' => $this->faker->numberBetween(1,20),
+            'position_type_id' => $this->faker->numberBetween(1,10),
             'employee_status_id' => 1
         ];
     }

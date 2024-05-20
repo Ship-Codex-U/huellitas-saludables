@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Artisan;
 // Packages
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUserStatus;
-
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,15 @@ require __DIR__.'/auth.php';
 
 Route::get('/storage', function () {
     Artisan::call('storage:link');
+});
+
+Route::get('/redis-test', function () {
+    try {
+        Redis::set('key', 'value');
+        return Redis::get('key');
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
 });
 
 //Informacion
@@ -63,16 +72,20 @@ Route::group(['middleware' => ['auth', CheckUserStatus::class]], function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     // Employees Module
-    Route::get('/empleado/{id}', [EmployeeController::class, 'getEmployee'])->middleware(('can:dashboard.users'));
+    Route::get('/empleado/buscar-veterinarios', [EmployeeController::class, 'searchVeterinarians']);
+    Route::get('/empleado/{id}', [EmployeeController::class, 'getEmployee'])->middleware(('can:dashboard.employees'));
     Route::resource('empleados', EmployeeController::class)->middleware('can:dashboard.employees');
 
     // Users Module
     Route::resource('usuarios', UserController::class)->middleware('can:dashboard.users');
 
     // Appointments Module
+    Route::get('/citas/todos', [AppointmentController::class, 'getAppointments'])->middleware('can:dashboard.appointments');
     Route::resource('citas', AppointmentController::class)->middleware('can:dashboard.appointments');
 
     // Customers Module
+    Route::get('/clientes/buscar-clientes', [CustomerController::class, 'getNameCustomer'])->middleware(('can:dashboard.customers'));
+    Route::get('/clientes/{customerID}/mascotas', [CustomerController::class, 'getPetsCustomer'])->middleware(('can:dashboard.customers'));;
     Route::resource('clientes', CustomerController::class)->middleware('can:dashboard.customers');
 
     // Pets Module

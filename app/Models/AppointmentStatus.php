@@ -15,6 +15,6 @@ class AppointmentStatus extends Model
 
     public function appointments() : HasMany
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Event::class);
     }
 }

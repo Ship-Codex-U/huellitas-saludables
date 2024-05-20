@@ -7,6 +7,8 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Requests\Client\StoreRequest; // Importa la clase StoreRequest
 use App\DataTables\CustomersDataTable;
+use App\Models\Pet;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -113,4 +115,27 @@ class CustomerController extends Controller
 
         return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente.');
     }
+
+    public function getNameCustomer(Request $request)
+    {
+        $searchQuery = $request->input('searchQuery');
+
+        // Buscar clientes que coincidan con el nombre o el apellido
+        // Concatenar el nombre y el apellido en una sola cadena
+        $clientes = Customer::select('id', DB::raw("CONCAT(name, ' ', last_name) AS full_name"))
+        ->where(DB::raw("CONCAT(id, ' ', name, ' ', last_name)"), 'LIKE', "%$searchQuery%")
+        ->get();
+
+        // Devolver las sugerencias de clientes en formato JSON
+        return response()->json($clientes);
+    }
+
+    public function getPetsCustomer(int $customerID)
+    {
+        // Obtener las mascotas asociadas al cliente específico
+        $mascotas = Customer::find($customerID)->pets;
+
+        return response()->json($mascotas);
+    }
+
 }

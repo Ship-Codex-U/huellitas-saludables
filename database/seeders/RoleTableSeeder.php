@@ -65,7 +65,7 @@ class RoleTableSeeder extends Seeder
         Permission::create([
             'name' => 'dashboard.appointments',
             'title' => 'Modulo Citas'
-        ])->syncRoles([$devRole, $adminRole, $receptionistRole]);
+        ])->syncRoles([$devRole, $adminRole, $receptionistRole, $veterinarianRole]);
         Permission::create([
             'name' => 'dashboard.customers',
             'title' => 'Modulo Clientes'

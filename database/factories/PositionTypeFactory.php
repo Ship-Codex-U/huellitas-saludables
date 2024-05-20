@@ -17,7 +17,7 @@ class PositionTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => $this->faker->word()
+            //
         ];
     }
 }
